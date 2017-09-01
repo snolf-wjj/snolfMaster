@@ -1,0 +1,14 @@
+.pageList{text-align:center;padding:20px 0px 40px;}
+.pageList .pageMore{font-weight:bold;border:none;padding:0 5px;}
+.pageList .pageMore:hover{background:none;border:none;color:#1f76e5;}
+.pageList .sizePar{color:#929294;margin:0px 2px;}
+.pageList .sizePar .size{width:25px;height:20px;border:1px solid #dbdcdb;margin:0px 3px;text-align:center;}
+.pageList .sizePar .size:focus{border:1px solid #9fc4f8;}
+.pageList button{background:#ebebeb;border-radius:15px;height:26px;padding:0px 13px;border:2px solid #ebebeb;color:#6e6e6e;margin:0px 2px;cursor:pointer;}
+.pageList button.active,.pageList button:hover{color:#c69f59;border:2px solid #c69f59;background:#f7f7f7;}
+.pageList button.disabled{background:#dcdcdc;color:#f6f6f6;border:2px solid #dcdcdc;}
+.bluePageList button{border: 2px solid #123b82;background:none;color:#1f76e5;}
+.bluePageList button.active,.bluePageList button:hover{background:#1f76e5;border: 2px solid #1f76e5;color:#fff;}
+.bluePageList button.disabled,.bluePageList button.disabled:hover{background:#0b2552;color:#16356a;border:2px solid #0b2552;}
+.bluePageList .sizePar,.bluePageList .size{color:#1f76e5;}
+.bluePageList .sizePar .size{border:1px solid #1f76e5;}
