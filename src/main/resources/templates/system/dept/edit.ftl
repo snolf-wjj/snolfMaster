@@ -27,8 +27,8 @@
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">部门级别：</label>
-            <div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
-				<select class="select" v-model="dept.deptLevel" size="1" name="deptLevel">
+            <div class="formControls col-xs-8 col-sm-9">
+				<select class="input-text" v-model="dept.deptLevel" size="1" name="deptLevel">
 					<option value="" selected>请选择级别</option>
 					<option value="1">一级</option>
 					<option value="2">二级</option>
@@ -38,7 +38,7 @@
 					<option value="6">六级</option>
 					<option value="7">七级</option>
 				</select>
-				</span> </div>
+            </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上级部门：</label>

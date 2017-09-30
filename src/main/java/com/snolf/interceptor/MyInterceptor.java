@@ -1,7 +1,5 @@
 package com.snolf.interceptor;
 
-import com.snolf.common.Config;
-import com.snolf.common.SessionInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,11 +20,11 @@ public class MyInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// 拦截规则
 		System.out.println(request.getRequestURL());
-		SessionInfo session = (SessionInfo) request.getSession().getAttribute(Config.getStringValue("sessionInfoName"));
-		if(null == session) {
-			response.sendRedirect(request.getContextPath() + "/system/login");
-			return false;
-		}
+//		SessionInfo session = (SessionInfo) request.getSession().getAttribute(Config.getStringValue("sessionInfoName"));
+//		if(null == session) {
+//			response.sendRedirect(request.getContextPath() + "/system/login");
+//			return false;
+//		}
 		return true;
 	}
 

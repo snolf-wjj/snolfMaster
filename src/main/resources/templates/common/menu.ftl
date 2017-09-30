@@ -55,7 +55,8 @@
 				<ul>
 					<li><a data-href="${base}/system/dept/list.html" data-title="部门管理" href="javascript:void(0)">部门管理</a></li>
 					<li><a data-href="${base}/system/role/list.html" data-title="角色管理" href="javascript:void(0)">角色管理</a></li>
-					<li><a data-href="admin-permission.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
+					<li><a data-href="${base}/system/project/list.html" data-title="项目管理" href="javascript:void(0)">项目管理</a></li>
+					<li><a data-href="${base}/system/authority/list.html" data-title="权限管理" href="javascript:void(0)">权限管理</a></li>
 					<li><a data-href="${base}/system/user/list.html" data-title="用户管理" href="javascript:void(0)">用户管理</a></li>
 				</ul>
 			</dd>

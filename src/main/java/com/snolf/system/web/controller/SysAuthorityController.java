@@ -4,26 +4,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/system/role")
-public class SysRoleController {
+@RequestMapping("/system/authority")
+public class SysAuthorityController {
 
 	@RequestMapping(value = "/list")
 	public String queryListPage() {
-		return "system/role/list";
+		return "system/authority/list";
 	}
 
 	@RequestMapping(value = "/add")
 	public String addPage() {
-		return "system/role/add";
+		return "system/authority/add";
 	}
 
 	@RequestMapping(value = "/edit")
 	public String editPage() {
-		return "system/role/edit";
-	}
-
-	@RequestMapping(value = "/assignAuth")
-	public String assignAuthorityPage() {
-		return "system/role/assignAuthority";
+		return "system/authority/edit";
 	}
 }

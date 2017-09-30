@@ -16,7 +16,7 @@
 			<a href="javascript:;" @click="batchDel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
 			<a href="javascript:;" @click="add('添加','${base}/system/dept/add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加部门</a>
 		</span>
-		<span class="r">共有数据：<strong>{{total}}</strong> 条</span> </div>
+		<span class="r">共有数据：<strong v-cloak>{{total}}</strong> 条</span> </div>
 	<div class="mt-20">
 		<table id="dataTable" class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>

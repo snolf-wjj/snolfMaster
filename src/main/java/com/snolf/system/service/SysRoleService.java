@@ -1,8 +1,10 @@
 package com.snolf.system.service;
 
 import com.snolf.system.model.SysRole;
+import com.snolf.system.model.SysRoleAuthority;
 import com.snolf.util.page.PageInfo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,5 +30,9 @@ public interface SysRoleService {
 	int batchDelete(String ids) throws Exception;
 
 	int insert(SysRole paramEntity) throws Exception;
+
+	List<SysRoleAuthority> queryRoleAuth(String roleId) throws Exception;
+
+	int assignRoleAuth(List<SysRoleAuthority> paramData, String roleId) throws Exception;
 
 }

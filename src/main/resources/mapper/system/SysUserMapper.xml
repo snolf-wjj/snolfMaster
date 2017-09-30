@@ -14,10 +14,19 @@
     <result column="role_id" property="roleId" jdbcType="VARCHAR" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="del_time" property="delTime" jdbcType="TIMESTAMP" />
+    <result column="del_user" property="delUser" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, login_name, user_name, password, create_date, last_login_time, last_login_ip, 
-    login_time, login_ip, role_id, user_status
+    id, login_name, user_name, password, last_login_time, last_login_ip,
+    login_time, login_ip, role_id, user_status, create_time, create_user, update_time, update_user,
+    del_time, del_user, is_del, remark
   </sql>
 
   <select id="login" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -67,7 +76,7 @@
     		and password=#{password}
     	</if>
     </where>
-    order by create_date desc
+    order by create_time desc
   </select>
   
   <delete id="deleteById" parameterType="java.lang.String" >
@@ -97,9 +106,6 @@
       <if test="password != null" >
         password,
       </if>
-      <if test="createDate != null" >
-        create_date,
-      </if>
       <if test="lastLoginTime != null" >
         last_login_time,
       </if>
@@ -115,6 +121,9 @@
       <if test="roleId != null" >
         role_id,
       </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -128,9 +137,6 @@
       </if>
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="lastLoginTime != null" >
         #{lastLoginTime,jdbcType=TIMESTAMP},
@@ -147,6 +153,9 @@
       <if test="roleId != null" >
         #{roleId,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </trim>
   </insert>
 
@@ -161,9 +170,6 @@
       </if>
       <if test="password != null" >
         password = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="createDate != null" >
-        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="lastLoginTime != null" >
         last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},

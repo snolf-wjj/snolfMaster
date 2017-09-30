@@ -3,6 +3,9 @@
 </head>
 <body>
 <div class="page-container">
+    <#--<p class="f-r"><script src="http://morfans.cn/app/js/GAY.js" charset="Shift_JIS"></script></p>-->
+    <p class="f-r"><script src="${base}/common/hamster.js" charset="Shift_JIS"></script></p>
+    <p class="f-r"><script src="${base}/common/peopleClock.js" charset="Shift_JIS"></script></p>
 	<p class="f-20 text-success">欢迎使用SNOLF-MASTER <span class="f-14">v1.0</span>系统！</p>
 	<p>登录次数：18 </p>
 	<p>上次登录IP：222.35.131.79.1  上次登录时间：2014-6-14 11:19:55</p>

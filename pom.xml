@@ -102,6 +102,12 @@
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.3</version>
         </dependency>
+        <!-- shiro 权限校验-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.2.2</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -117,6 +123,7 @@
                     <dependency>
                         <groupId>org.springframework</groupId>
                         <artifactId>springloaded</artifactId>
+                        <version>1.2.5.RELEASE</version>
                     </dependency>
                 </dependencies>
             </plugin>

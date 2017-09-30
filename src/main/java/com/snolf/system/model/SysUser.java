@@ -15,8 +15,6 @@ public class SysUser extends BaseEntity {
 
     private String password;
 
-    private Date createDate;
-
     private Date lastLoginTime;
 
     private String lastLoginIp;
@@ -63,14 +61,6 @@ public class SysUser extends BaseEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
 	}
 
 	public Date getLastLoginTime() {

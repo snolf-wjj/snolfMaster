@@ -2,7 +2,7 @@
 <title>用户管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 部门管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 角色管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div id="app" class="page-container">
 	<div class="text-c"> 日期范围：
 		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endCreateTime\')||\'%y-%M-%d\'}' })" id="startCreateTime" class="input-text Wdate" style="width:120px;" v-model="startCreateTime" placeholder="开始时间">
@@ -16,7 +16,7 @@
 			<a href="javascript:;" @click="batchDel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
 			<a href="javascript:;" @click="add('添加','${base}/system/role/add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加角色</a>
 		</span>
-		<span class="r">共有数据：<strong>{{total}}</strong> 条</span> </div>
+		<span class="r">共有数据：<strong v-cloak>{{total}}</strong> 条</span> </div>
 	<div class="mt-20">
 		<table id="dataTable" class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
@@ -39,7 +39,11 @@
 					<td class="text-l">{{role.remark}}</td>
 					<td>{{role.createTime|vTime}}</td>
 					<td>{{role.createUser}}</td>
-					<td class="td-manage"> <a title="编辑" href="javascript:;" v-on:click="edit('编辑','${base}/system/role/edit.html',role.id,'','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" v-on:click="del(this, role.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+					<td class="td-manage">
+						<a title="权限分配" href="javascript:;" v-on:click="assignAuth('权限分配','${base}/system/role/assignAuth.html',role.id, role.name, role.roleKey, '','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe63c;</i></a>
+						<a title="编辑" href="javascript:;" v-on:click="edit('编辑','${base}/system/role/edit.html',role.id,'','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+						<a title="删除" href="javascript:;" v-on:click="del(this, role.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+					</td>
 				</tr>
 				</template>
 			</tbody>
@@ -103,6 +107,10 @@ var app = new Vue({
             });
 
         },
+		assignAuth: function(title, url, id, name, roleKey, w, h){
+        	var param = "?roleId=" + id + "&name=" + name + "&roleKey=" + roleKey;
+			layer_show(title, url+param, w, h);
+		},
 		edit: function(title, url, id, w, h){
         	var param = "?id="+id;
 			layer_show(title, url+param, w, h);

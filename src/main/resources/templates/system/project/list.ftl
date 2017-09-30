@@ -1,20 +1,20 @@
 ﻿<#include "../../common/meta.ftl"/>
-<title>用户管理</title>
+<title>权限管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 项目管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div id="app" class="page-container">
 	<div class="text-c"> 日期范围：
 		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endCreateTime\')||\'%y-%M-%d\'}' })" id="startCreateTime" class="input-text Wdate" style="width:120px;" v-model="startCreateTime" placeholder="开始时间">
 		-
 		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'startCreateTime\')}',maxDate:'%y-%M-%d' })" id="endCreateTime" class="input-text Wdate" style="width:120px;" v-model="endCreateTime" placeholder="结束时间">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入用户名称" id="name" v-model="name">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入项目名称" id="name" v-model="name">
 		<button type="submit" class="btn btn-success radius" id="" v-on:click="loadData"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="l">
-			<a href="javascript:;" @click="batchDel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
-			<a href="javascript:;" @click="add('添加','${base}/system/user/add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
+			<a href="javascript:;" @cl	ick="batchDel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+			<a href="javascript:;" @click="add('添加','${base}/system/project/add.html','','510')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加项目</a>
 		</span>
 		<span class="r">共有数据：<strong v-cloak>{{total}}</strong> 条</span> </div>
 	<div class="mt-20">
@@ -22,37 +22,30 @@
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="check"  value=""></th>
-					<th width="100">账号</th>
-					<th width="80">昵称</th>
-					<th width="100">所属角色</th>
-					<th width="130">最后登录时间</th>
-					<th width="130">最后登录IP</th>
-					<th width="130">添加时间</th>
-					<th width="130">状态</th>
+					<th width="80">项目名称</th>
+					<th width="120">URL地址</th>
+					<th width="40">状态</th>
+					<th width="130">备注</th>
+					<th width="80">添加时间</th>
+					<th width="70">添加人</th>
 					<th width="100">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<template v-if="dataList.length">
-				<tr class="text-c" v-for="user in dataList">
-					<td><input type="checkbox" v-bind:value="user.id" name="check" text="check"></td>
-					<td>{{user.loginName }}</td>
-					<td>{{user.userName}}</td>
-					<td class="text-l">{{user.userName}}修改中</td>
-					<td>{{user.lastLoginTime|vTime}}</td>
-					<td>{{user.lastLoginIp}}</td>
-					<td>{{user.createTime|vTime}}</td>
-					<td>
-						<span class="label label-success radius" v-if="user.userStatus == 0">已启用</span>
-						<span class="label label-danger radius" v-else-if="user.userStatus == 1">已禁用</span>
-					</td>
-					<td class="td-manage">
-                        <a title="停用" href="javascript:;" v-if="user.userStatus == 0" v-on:click="updateStatus(user.id, 1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>
-                        <a title="启用" href="javascript:;" v-else-if="user.userStatus == 1" v-on:click="updateStatus(user.id, 0)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>
+				<tr class="text-c" v-for="project in dataList">
+					<td><input type="checkbox" v-bind:value="project.id" name="check" text="check"></td>
+					<td>{{project.name }}</td>
+					<td>{{project.url}}</td>
 
-						<a title="编辑" href="javascript:;" v-on:click="edit('编辑','${base}/system/user/edit.html',user.id,'','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-						<a title="删除" href="javascript:;" v-on:click="del(this, user.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-					</td>
+					<td v-if="project.status==0">正常</td>
+					<td v-else-if="project.status==1">停用</td>
+					<td v-else-if="project.status==2">维护</td>
+
+					<td class="text-l">{{project.remark}}</td>
+					<td>{{project.createTime|vTime}}</td>
+					<td>{{project.createUser}}</td>
+					<td class="td-manage"> <a title="编辑" href="javascript:;" v-on:click="edit('编辑','${base}/system/project/edit.html',project.id,'','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" v-on:click="del(this, project.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
 				</tr>
 				</template>
 			</tbody>
@@ -73,7 +66,7 @@ var app = new Vue({
         total: '',//数据总条数
         dataList: [],
 		pageNum:1,
-        userName: '',
+        name: '',
         startCreateTime: '',
         endCreateTime: ''
     },
@@ -87,7 +80,7 @@ var app = new Vue({
             pageNum = isNaN(pageNum)?1:pageNum;
             this.pageNum = pageNum;
             layer.load();
-            this.$http.get("${base}/system/rest/user/list",{params:{"pageNum": this.pageNum, "name": this.name,
+            this.$http.get("${base}/system/rest/project/list",{params:{"pageNum": this.pageNum, "name": this.name,
 			"startCreateTime":this.startCreateTime,"endCreateTime":this.endCreateTime}}).then(function (response) {
                 layer.closeAll('loading');
             	var data = response.data.data;
@@ -123,27 +116,9 @@ var app = new Vue({
         add: function(title, url, w, h){
             layer_show(title, url, w, h);
         },
-		updateStatus: function (id, status) {
-        	var str = "确认要冻结吗？";
-        	if ("0" == status)
-        		str = "确认要解冻吗？";
-            layer.confirm(str, function() {
-                Vue.http.post("${base}/system/rest/user/updateStatus", {"id":id, "userStatus":status}, {emulateJSON:true}).then(function(response) {
-                    var data = response.data;
-                    if ("0000" == data.code) {
-                        layer.msg(data.msg, {icon: 1, time: 1000});
-                        app.loadData(1);
-                    } else {
-                        layer.msg(data.msg, {icon: 2, time: 1000});
-                    }
-                },function(error){
-                    layer.msg(data.msg, {icon: 5, time: 1000});
-                });
-            });
-        },
 		del: function(obj, id) {
             layer.confirm('确认要删除吗？',function() {
-                Vue.http.post("${base}/system/rest/user/delete", {"id":id}, {emulateJSON:true}).then(function(response) {
+                Vue.http.post("${base}/system/rest/project/delete", {"id":id}, {emulateJSON:true}).then(function(response) {
                     var data = response.data;
                     if ("0000" == data.code) {
                         layer.msg(data.msg, {icon: 1, time: 1000});
@@ -167,7 +142,7 @@ var app = new Vue({
 			}
             layer.confirm('确认要删除吗？',function() {
 				var ids = id_array.join(',');
-				Vue.http.post("${base}/system/rest/user/batchDelete", {"ids":ids}, {emulateJSON:true}).then(function(response) {
+				Vue.http.post("${base}/system/rest/project/batchDelete", {"ids":ids}, {emulateJSON:true}).then(function(response) {
 					var data = response.data;
 					if ("0000" == data.code) {
 						layer.msg(data.msg, {icon: 1, time: 1000});

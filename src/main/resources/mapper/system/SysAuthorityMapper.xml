@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.snolf.system.mapper.SysAuthorityMapper" >
+  <resultMap id="BaseResultMap" type="com.snolf.system.model.SysAuthority" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="auth_name" property="authName" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="auth_key" property="authKey" jdbcType="VARCHAR" />
+    <result column="pro_id" property="proId" jdbcType="INTEGER" />
+    <result column="is_show" property="isShow" jdbcType="TINYINT" />
+    <result column="sort" property="sort" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
+    <result column="del_time" property="delTime" jdbcType="TIMESTAMP" />
+    <result column="del_user" property="delUser" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, auth_name, url, level, type, parent_id, auth_key, pro_id, is_show, sort, create_time, create_user,
+    update_time, update_user, del_time, del_user, is_del, remark
+  </sql>
+
+  <select id="query" resultMap="BaseResultMap" parameterType="com.snolf.system.model.SysAuthority" >
+    select 
+    <include refid="Base_Column_List" />
+    ,(select name from sys_project p where p.id = pro_id) proName
+    from sys_authority
+    <where>
+      <if test="id != null">
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="authKey != null">
+        and auth_key = #{authKey,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    ,(select name from sys_project p where p.id = pro_id) proName
+    from sys_authority
+    <where>
+      <if test="startCreateTime != null and startCreateTime != ''">
+        and create_time&gt;= concat(#{startCreateTime,jdbcType=VARCHAR}, '00:00:00')
+      </if>
+      <if test="endCreateTime != null and endCreateTime != ''">
+        and create_time&lt;= concat(#{endCreateTime,jdbcType=VARCHAR}, '23:59:59')
+      </if>
+      <if test="authName != null and authName != ''">
+        and auth_name like concat('%', #{authName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="proId != null and proId != ''">
+        and pro_id = #{proId,jdbcType=INTEGER}
+      </if>
+      <if test="type != null and type != ''">
+        and type = #{type,jdbcType=TINYINT}
+      </if>
+      <if test="parentId != null and parentId != ''">
+        and parent_id = #{parentId,jdbcType=INTEGER}
+      </if>
+    </where>
+    ORDER BY create_time DESC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.String" >
+    delete from sys_authority
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="batchDelete" parameterType="java.lang.String" >
+    delete from sys_authority where id  in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.snolf.system.model.SysAuthority" >
+    insert into sys_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="authName != null" >
+        auth_name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="authKey != null" >
+        auth_key,
+      </if>
+      <if test="proId != null" >
+        pro_id,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUser != null" >
+        create_user,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="authName != null" >
+        #{authName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="authKey != null" >
+        #{authKey,jdbcType=VARCHAR},
+      </if>
+      <if test="proId != null" >
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.snolf.system.model.SysAuthority" >
+    update sys_authority
+    <set >
+      <if test="authName != null" >
+        auth_name = #{authName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="authKey != null" >
+        auth_key = #{authKey,jdbcType=VARCHAR},
+      </if>
+      <if test="proId != null" >
+        pro_id = #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=TINYINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null" >
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="delTime != null" >
+        del_time = #{delTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delUser != null" >
+        del_user = #{delUser,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
