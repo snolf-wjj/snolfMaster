@@ -1,7 +1,7 @@
 package com.snolf.system.service;
 
+import com.snolf.common.page.PageInfo;
 import com.snolf.system.model.SysProject;
-import com.snolf.util.page.PageInfo;
 
 import java.util.List;
 import java.util.Map;

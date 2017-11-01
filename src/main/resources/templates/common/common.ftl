@@ -1,10 +1,10 @@
 <#assign base="http://localhost" />
 
 <link rel="stylesheet" type="text/css" href="${base}/h-ui/css/H-ui.min.css">
-<link rel="stylesheet" type="text/css" href="${base}/h-ui/admin/H-ui.admin.css">
+<link rel="stylesheet" type="text/css" href="${base}/h-ui.admin/css/H-ui.admin.css">
 <link rel="stylesheet" type="text/css" href="${base}/lib/Hui-iconfont/1.0.8/iconfont.css">
 <link rel="stylesheet" type="text/css" href="${base}/skin/default/skin.css" id="skin">
-<link rel="stylesheet" type="text/css" href="${base}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${base}/h-ui.admin/css/style.css">
 <#-- 文件上传 -->
 <link rel="stylesheet" type="text/css" href="${base}/lib/webuploader/0.1.5/webuploader.css">
 <#-- 树插件 -->

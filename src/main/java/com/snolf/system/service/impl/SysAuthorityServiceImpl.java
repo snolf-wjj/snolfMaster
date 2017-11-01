@@ -4,15 +4,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.snolf.common.Static;
+import com.snolf.common.model.TreeNodeZTree;
+import com.snolf.common.page.PageInfo;
+import com.snolf.common.util.TreeUtilZTree;
+import com.snolf.common.util.ValidateUtil;
 import com.snolf.system.mapper.SysAuthorityMapper;
 import com.snolf.system.mapper.SysRoleAuthorityMapper;
 import com.snolf.system.model.SysAuthority;
 import com.snolf.system.model.SysRoleAuthority;
 import com.snolf.system.service.SysAuthorityService;
-import com.snolf.util.common.TreeUtilZTree;
-import com.snolf.util.common.ValidateUtil;
-import com.snolf.util.model.TreeNodeZTree;
-import com.snolf.util.page.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -177,6 +177,18 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 		String jsonStr = JSON.toJSONStringWithDateFormat(TreeUtilZTree.generateTree(tree, "0000"), "yyyy-MM-dd HH:mm:ss");
 		JSONArray jsonArray = JSONArray.parseArray(jsonStr);
 		return jsonArray;
+	}
+
+	@Override
+	public List<SysAuthority> queryAuthList(Map<String, Object> map) throws Exception {
+		List<SysAuthority> dataList = authorityMapper.queryList(map);
+		return dataList;
+	}
+
+	@Override
+	public List<String> queryUrlByRoleId(String roleId) throws Exception {
+		List<String> dataList = authorityMapper.queryUrlByRoleId(roleId);
+		return dataList;
 	}
 
 	/**

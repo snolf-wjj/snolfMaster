@@ -1,14 +1,17 @@
 package com.snolf.system.web.restcontroller;
 
+import com.alibaba.fastjson.JSON;
 import com.snolf.base.BaseController;
 import com.snolf.common.contact.SystemStatusCode;
+import com.snolf.common.page.PageInfo;
 import com.snolf.common.response.ResponseExceptionUtil;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
+import com.snolf.common.util.ValidateUtil;
 import com.snolf.system.model.SysUser;
+import com.snolf.system.model.SysUserRole;
 import com.snolf.system.service.SysUserService;
-import com.snolf.util.common.ValidateUtil;
-import com.snolf.util.page.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,6 +36,7 @@ public class SysUserRestController extends BaseController {
 	 * @author wangjunjie
 	 * @date 2017/6/23 16:32
 	 */
+	@RequiresPermissions("/system/rest/user/list")
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public ResponseResult<PageInfo<SysUser>> list(HttpServletRequest request) {
@@ -46,6 +51,7 @@ public class SysUserRestController extends BaseController {
 		}
 	}
 
+	@RequiresPermissions("/system/rest/user/add")
 	@RequestMapping(value = "/add")
 	@ResponseBody
 	public ResponseResult<String> add(SysUser paramEntity) {
@@ -61,7 +67,8 @@ public class SysUserRestController extends BaseController {
 			return ResponseExceptionUtil.handleException(e);
 		}
 	}
-	
+
+	@RequiresPermissions("/system/rest/user/delete")
 	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public ResponseResult<String> delete(String id) {
@@ -81,6 +88,7 @@ public class SysUserRestController extends BaseController {
 		}
 	}
 
+	@RequiresPermissions("/system/rest/user/batchDelete")
 	@RequestMapping(value = "/batchDelete")
 	@ResponseBody
 	public ResponseResult<String> batchDelete(String ids) {
@@ -96,7 +104,8 @@ public class SysUserRestController extends BaseController {
 			return ResponseExceptionUtil.handleException(e);
 		}
 	}
-	
+
+	@RequiresPermissions("/system/rest/user/edit")
 	@RequestMapping(value = "/edit")
 	@ResponseBody
 	public ResponseResult<String> edit(SysUser paramEntity) {
@@ -129,6 +138,7 @@ public class SysUserRestController extends BaseController {
 	 * @author wangjunjie
 	 * @date 2017/8/28 15:54
 	 */
+	@RequiresPermissions("/system/rest/user/updateStatus")
 	@RequestMapping("updateStatus")
 	@ResponseBody
 	public ResponseResult<String> updateStatus(String id, Integer userStatus) {
@@ -142,6 +152,19 @@ public class SysUserRestController extends BaseController {
 			} else {
 				return ResponseUtil.error(SystemStatusCode.sysMsg.L_0001.getCode(), SystemStatusCode.sysMsg.L_0001.getMsg());
 			}
+		} catch (Exception e) {
+			return ResponseExceptionUtil.handleException(e);
+		}
+	}
+
+	@RequiresPermissions("/system/rest/user/assignUserRole")
+	@RequestMapping(value = "/assignUserRole")
+	@ResponseBody
+	public ResponseResult<String> assignUserRole(String dataParam, String userId) {
+		try {
+			List<SysUserRole> dataParams = JSON.parseArray(dataParam, SysUserRole.class);
+			sysUserService.assignUserRole(dataParams, userId);
+			return ResponseUtil.success("操作成功");
 		} catch (Exception e) {
 			return ResponseExceptionUtil.handleException(e);
 		}

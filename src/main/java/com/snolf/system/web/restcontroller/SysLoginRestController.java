@@ -1,14 +1,19 @@
 package com.snolf.system.web.restcontroller;
 
-import com.snolf.common.Config;
-import com.snolf.common.SessionInfo;
+import com.snolf.base.BaseController;
 import com.snolf.common.contact.SystemStatusCode;
 import com.snolf.common.response.ResponseExceptionUtil;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
 import com.snolf.system.model.SysUser;
 import com.snolf.system.service.SysUserService;
-import com.snolf.util.common.IpUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import java.util.Map;
 
 /**
  * Created with IDEA
@@ -25,34 +30,53 @@ import java.util.Date;
  * Time: 17:13
  */
 @RestController
-@RequestMapping("user/")
-public class SysLoginRestController {
+@RequestMapping("system/rest/")
+public class SysLoginRestController extends BaseController{
 	@Resource
 	private SysUserService sysUserService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseResult<String> login(String loginName, String password, HttpServletRequest request) {
+	public ResponseResult<Map<String, Object>> login(String loginName, String password, boolean rememberMe, HttpServletRequest request) {
 		try {
-			SysUser user = sysUserService.login(loginName, password);
-			if (null == user) {
-				return ResponseUtil.error(SystemStatusCode.sysMsg.L_0002.getCode(), "账号或密码错误");
-			} else {
-				//更新登录信息
-				SysUser paramEntity = new SysUser();
-				paramEntity.setId(user.getId());
-				paramEntity.setLastLoginIp(user.getLoginIp());
-				paramEntity.setLastLoginTime(user.getLoginTime());
-				paramEntity.setLoginIp(IpUtil.getIpAddr(request));
-				paramEntity.setLoginTime(new Date());
-				sysUserService.updateLoginInfo(paramEntity);
-
-				SessionInfo session = new SessionInfo();
-				session.setLoginName(user.getLoginName());
-				session.setUserName(user.getUserName());
-				request.getSession().setAttribute(Config.getStringValue("sessionInfoName"), session);
-				return ResponseUtil.success("登录成功");
+			UsernamePasswordToken token = new UsernamePasswordToken(loginName, password);
+			token.setRememberMe(rememberMe);
+			SecurityUtils.getSubject().login(token);
+			SysUser userToken = (SysUser) SecurityUtils.getSubject().getPrincipal();
+			/**
+			 * shiro 获取登录之前的地址
+			 */
+			SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+			String url = null ;
+			if(null != savedRequest){
+				url = savedRequest.getRequestUrl();
 			}
+			//如果登录之前没有地址，那么就跳转到首页。
+			if(StringUtils.isBlank(url) || url.contains("login")){
+				url = request.getContextPath() + "/system/index.html";
+			}
+
+			resultMap.put("url", url);
+			resultMap.put("message", "登录成功");
+			return ResponseUtil.success(resultMap);
+		} catch (AccountException e) {
+			return ResponseUtil.error(SystemStatusCode.sysMsg.L_0001.getCode(), e.getMessage());
+		}catch (Exception e) {
+			return ResponseExceptionUtil.handleException(e);
+		}
+	}
+
+	/**
+	 * 退出登录
+	 * @return
+	 */
+	@RequiresAuthentication
+	@RequestMapping(value="logout",method =RequestMethod.GET)
+	@ResponseBody
+	public ResponseResult<String> logout(){
+		try {
+			SecurityUtils.getSubject().logout();
+			return ResponseUtil.success("退出成功");
 		} catch (Exception e) {
 			return ResponseExceptionUtil.handleException(e);
 		}

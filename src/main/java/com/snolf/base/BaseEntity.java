@@ -35,7 +35,7 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 删除标记 0:正常1:删除
 	 */
-	private Integer isDel;
+	private Integer del;
 
 	/**
 	 * 删除时间
@@ -79,12 +79,12 @@ public class BaseEntity implements Serializable {
 		this.updateUser = updateUser;
 	}
 
-	public Integer getIsDel() {
-		return isDel;
+	public Integer getDel() {
+		return del;
 	}
 
-	public void setIsDel(Integer isDel) {
-		this.isDel = isDel;
+	public void setDel(Integer del) {
+		this.del = del;
 	}
 
 	public Date getDelTime() {

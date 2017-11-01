@@ -1,6 +1,6 @@
-package com.snolf.util.common;
+package com.snolf.common.util;
 
-import com.snolf.util.ReflectionUtil;
+import com.snolf.common.ReflectionUtil;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;

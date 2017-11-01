@@ -3,13 +3,14 @@ package com.snolf.system.web.restcontroller;
 import com.alibaba.fastjson.JSONArray;
 import com.snolf.base.BaseController;
 import com.snolf.common.contact.SystemStatusCode;
+import com.snolf.common.page.PageInfo;
 import com.snolf.common.response.ResponseExceptionUtil;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
+import com.snolf.common.util.ValidateUtil;
 import com.snolf.system.model.SysAuthority;
 import com.snolf.system.service.SysAuthorityService;
-import com.snolf.util.common.ValidateUtil;
-import com.snolf.util.page.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ public class SysAuthorityRestController extends BaseController{
 	 * @author wangjunjie
 	 * @date 2017/9/4 15:03
 	 */
+	@RequiresPermissions("/system/rest/authority/list")
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public ResponseResult<PageInfo<SysAuthority>> list(HttpServletRequest request) {
@@ -53,6 +55,7 @@ public class SysAuthorityRestController extends BaseController{
 	 * @author wangjunjie
 	 * @date 2017/9/4 15:04
 	 */
+	@RequiresPermissions("/system/rest/authority/get")
 	@RequestMapping("get")
 	@ResponseBody
 	public ResponseResult<SysAuthority> get(@RequestParam(required=true) Integer id) {
@@ -75,6 +78,7 @@ public class SysAuthorityRestController extends BaseController{
 	 * @author wangjunjie
 	 * @date 2017/9/4 15:04
 	 */
+	@RequiresPermissions("/system/rest/authority/add")
 	@RequestMapping(value = "/add")
 	@ResponseBody
 	public ResponseResult<String> add(SysAuthority dept) {
@@ -91,6 +95,7 @@ public class SysAuthorityRestController extends BaseController{
 		}
 	}
 
+	@RequiresPermissions("/system/rest/authority/delete")
 	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public ResponseResult<String> delete(String id) {
@@ -107,6 +112,7 @@ public class SysAuthorityRestController extends BaseController{
 		}
 	}
 
+	@RequiresPermissions("/system/rest/authority/batchDelete")
 	@RequestMapping(value = "/batchDelete")
 	@ResponseBody
 	public ResponseResult<String> batchDelete(String ids) {
@@ -123,7 +129,8 @@ public class SysAuthorityRestController extends BaseController{
 			return ResponseExceptionUtil.handleException(e);
 		}
 	}
-	
+
+	@RequiresPermissions("/system/rest/authority/edit")
 	@RequestMapping(value = "/edit")
 	@ResponseBody
 	public ResponseResult<String> edit(SysAuthority dept) {
@@ -139,6 +146,12 @@ public class SysAuthorityRestController extends BaseController{
 		}
 	}
 
+	/**
+	 * 选择上级权限时用
+	 * @param request
+	 * @return
+	 */
+	@RequiresPermissions("/system/rest/authority/listSelect")
 	@RequestMapping(value = "/listSelect")
 	@ResponseBody
 	public ResponseResult<List<SysAuthority>> listSelect(HttpServletRequest request) {
@@ -153,6 +166,7 @@ public class SysAuthorityRestController extends BaseController{
 		}
 	}
 
+	@RequiresPermissions("/system/rest/authority/tree")
 	@RequestMapping(value = "/tree")
 	@ResponseBody
 	public ResponseResult<JSONArray> getAuthTree(HttpServletRequest request) {
@@ -162,7 +176,6 @@ public class SysAuthorityRestController extends BaseController{
 			treeJson = sysAuthorityService.queryListAll(paramsMap);
 			return ResponseUtil.success(treeJson);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return ResponseExceptionUtil.handleException(e);
 		}
 	}

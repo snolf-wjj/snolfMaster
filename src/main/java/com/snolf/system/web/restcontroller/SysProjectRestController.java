@@ -2,13 +2,14 @@ package com.snolf.system.web.restcontroller;
 
 import com.snolf.base.BaseController;
 import com.snolf.common.contact.SystemStatusCode;
+import com.snolf.common.page.PageInfo;
 import com.snolf.common.response.ResponseExceptionUtil;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
+import com.snolf.common.util.ValidateUtil;
 import com.snolf.system.model.SysProject;
 import com.snolf.system.service.SysProjectService;
-import com.snolf.util.common.ValidateUtil;
-import com.snolf.util.page.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,7 @@ public class SysProjectRestController extends BaseController{
 	 * @author wangjunjie
 	 * @date 2017/9/4 15:03
 	 */
+	@RequiresPermissions("/system/rest/project/list")
 	@RequestMapping(value = "/list")
 	@ResponseBody
 	public ResponseResult<PageInfo<SysProject>> list(HttpServletRequest request) {
@@ -49,6 +51,7 @@ public class SysProjectRestController extends BaseController{
 		}
 	}
 
+	@RequiresPermissions("/system/rest/project/listAll")
 	@RequestMapping(value = "/listAll")
 	@ResponseBody
 	public ResponseResult<List<SysProject>> listAll(HttpServletRequest request) {
@@ -67,6 +70,7 @@ public class SysProjectRestController extends BaseController{
 	 * @author wangjunjie
 	 * @date 2017/9/4 15:04
 	 */
+	@RequiresPermissions("/system/rest/project/get")
 	@RequestMapping("get")
 	@ResponseBody
 	public ResponseResult<SysProject> get(@RequestParam(required=true) Integer id) {
@@ -85,6 +89,7 @@ public class SysProjectRestController extends BaseController{
 	 * @author wangjunjie
 	 * @date 2017/9/4 15:04
 	 */
+	@RequiresPermissions("/system/rest/project/add")
 	@RequestMapping(value = "/add")
 	@ResponseBody
 	public ResponseResult<String> add(SysProject dept) {
@@ -101,6 +106,7 @@ public class SysProjectRestController extends BaseController{
 		}
 	}
 
+	@RequiresPermissions("/system/rest/project/delete")
 	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public ResponseResult<String> delete(String id) {
@@ -117,6 +123,7 @@ public class SysProjectRestController extends BaseController{
 		}
 	}
 
+	@RequiresPermissions("/system/rest/project/batchDelete")
 	@RequestMapping(value = "/batchDelete")
 	@ResponseBody
 	public ResponseResult<String> batchDelete(String ids) {
@@ -132,7 +139,8 @@ public class SysProjectRestController extends BaseController{
 			return ResponseExceptionUtil.handleException(e);
 		}
 	}
-	
+
+	@RequiresPermissions("/system/rest/project/edit")
 	@RequestMapping(value = "/edit")
 	@ResponseBody
 	public ResponseResult<String> edit(SysProject dept) {

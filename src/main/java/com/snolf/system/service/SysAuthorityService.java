@@ -1,8 +1,8 @@
 package com.snolf.system.service;
 
 import com.alibaba.fastjson.JSONArray;
+import com.snolf.common.page.PageInfo;
 import com.snolf.system.model.SysAuthority;
-import com.snolf.util.page.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -40,4 +40,20 @@ public interface SysAuthorityService {
 	 * @throws Exception
 	 */
 	JSONArray queryListAll(Map<String, Object> map) throws Exception;
+
+	/**
+	 * 获取权限列表
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	List<SysAuthority> queryAuthList(Map<String, Object> map) throws Exception;
+
+	/**
+	 * 根据角色获取权限URL
+	 * @param roleId
+	 * @return
+	 * @throws Exception
+	 */
+	List<String> queryUrlByRoleId(String roleId) throws Exception;
 }

@@ -77,3 +77,33 @@ function parentReload() {
 	var index = parent.layer.getFrameIndex(window.text);
 	parent.layer.close(index);
 }
+/**
+ * 退出登录
+ */
+function logout(url){
+	$.get(url + "/system/rest/logout", function(result){
+		if(result.code == "0000"){
+			layer.msg('退出成功！');
+			window.location.reload(true);
+			return !1;
+		}else{
+			layer.msg('退出失败，重试！');
+		}
+	});
+}
+
+(function() {
+	var OriginTitile = document.title, titleTime;
+	document.addEventListener('visibilitychange', function() {
+		if (document.hidden) {
+			document.title = '死鬼去哪里了！';
+			clearTimeout(titleTime);
+		} else {
+			// document.title = '(つェ⊂)咦!又好了!';
+			document.title = '主人，你回来啦!（*^﹏^*）';
+			titleTime = setTimeout(function() {
+				document.title = OriginTitile;
+			},2000);
+		}
+	});
+})();

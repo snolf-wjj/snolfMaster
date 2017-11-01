@@ -39,7 +39,7 @@ public class SysAuthority extends BaseEntity{
     /**
      * 是否在菜单中显示 0：展示 1：不展示
      */
-    private Integer isShow;
+    private Integer show;
 
     /**
      * 排序字段
@@ -127,12 +127,12 @@ public class SysAuthority extends BaseEntity{
         this.proId = proId;
     }
 
-    public Integer getIsShow() {
-        return isShow;
+    public Integer getShow() {
+        return show;
     }
 
-    public void setIsShow(Integer isShow) {
-        this.isShow = isShow;
+    public void setShow(Integer show) {
+        this.show = show;
     }
 
 

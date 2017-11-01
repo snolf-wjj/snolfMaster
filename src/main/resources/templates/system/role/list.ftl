@@ -23,9 +23,9 @@
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="check"  value=""></th>
 					<th width="100">角色名称</th>
-					<th width="40">标识</th>
+					<th width="50">标识</th>
 					<th width="80">备注</th>
-					<th width="130">添加时间</th>
+					<th width="60">添加时间</th>
 					<th width="70">添加人</th>
 					<th width="100">操作</th>
 				</tr>

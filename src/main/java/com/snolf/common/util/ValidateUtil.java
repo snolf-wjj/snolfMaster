@@ -1,4 +1,4 @@
-package com.snolf.util.common;
+package com.snolf.common.util;
 
 import com.snolf.common.exception.BusinessException;
 import com.snolf.common.exception.ParamDefectException;

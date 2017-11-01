@@ -1,4 +1,4 @@
-package com.snolf.util.page;
+package com.snolf.common.page;
 
 import com.github.pagehelper.Page;
 

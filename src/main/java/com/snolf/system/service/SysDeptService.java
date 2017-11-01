@@ -1,8 +1,8 @@
 package com.snolf.system.service;
 
 import com.alibaba.fastjson.JSONArray;
+import com.snolf.common.page.PageInfo;
 import com.snolf.system.model.SysDept;
-import com.snolf.util.page.PageInfo;
 
 import java.util.Map;
 

@@ -8,7 +8,7 @@
 		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endCreateTime\')||\'%y-%M-%d\'}' })" id="startCreateTime" class="input-text Wdate" style="width:120px;" v-model="startCreateTime" placeholder="开始时间">
 		-
 		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'startCreateTime\')}',maxDate:'%y-%M-%d' })" id="endCreateTime" class="input-text Wdate" style="width:120px;" v-model="endCreateTime" placeholder="结束时间">
-		<input type="text" class="input-text" style="width:250px" placeholder="输入用户名称" id="name" v-model="name">
+		<input type="text" class="input-text" style="width:250px" placeholder="输入用户名称" id="userName" v-model="userName">
 		<button type="submit" class="btn btn-success radius" id="" v-on:click="loadData"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
@@ -38,7 +38,7 @@
 					<td><input type="checkbox" v-bind:value="user.id" name="check" text="check"></td>
 					<td>{{user.loginName }}</td>
 					<td>{{user.userName}}</td>
-					<td class="text-l">{{user.userName}}修改中</td>
+					<td>{{user.roleName}}</td>
 					<td>{{user.lastLoginTime|vTime}}</td>
 					<td>{{user.lastLoginIp}}</td>
 					<td>{{user.createTime|vTime}}</td>
@@ -50,6 +50,7 @@
                         <a title="停用" href="javascript:;" v-if="user.userStatus == 0" v-on:click="updateStatus(user.id, 1)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>
                         <a title="启用" href="javascript:;" v-else-if="user.userStatus == 1" v-on:click="updateStatus(user.id, 0)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>
 
+						<a title="分配角色" href="javascript:;" v-on:click="assignRole('分配角色','${base}/system/user/assignRole.html',user.id, user.userStatus, '','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe611;</i></a>
 						<a title="编辑" href="javascript:;" v-on:click="edit('编辑','${base}/system/user/edit.html',user.id,'','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 						<a title="删除" href="javascript:;" v-on:click="del(this, user.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 					</td>
@@ -87,7 +88,7 @@ var app = new Vue({
             pageNum = isNaN(pageNum)?1:pageNum;
             this.pageNum = pageNum;
             layer.load();
-            this.$http.get("${base}/system/rest/user/list",{params:{"pageNum": this.pageNum, "name": this.name,
+            this.$http.get("${base}/system/rest/user/list",{params:{"pageNum": this.pageNum, "userName": this.userName,
 			"startCreateTime":this.startCreateTime,"endCreateTime":this.endCreateTime}}).then(function (response) {
                 layer.closeAll('loading');
             	var data = response.data.data;
@@ -122,6 +123,14 @@ var app = new Vue({
 		},
         add: function(title, url, w, h){
             layer_show(title, url, w, h);
+        },
+        assignRole: function(title, url, id, userStatus, w, h){
+        	if (userStatus == 1) {
+                layer.msg("该用户已被禁用，请先解禁！", {icon: 5, time: 1100});
+                return;
+            }
+            var param = "?userId=" + id;
+            layer_show(title, url+param, w, h);
         },
 		updateStatus: function (id, status) {
         	var str = "确认要冻结吗？";

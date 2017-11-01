@@ -1,5 +1,6 @@
 package com.snolf.system.web.controller;
 
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,7 +19,7 @@ public class LoginController {
 	 * @author wangjunjie
 	 * @date 2017/6/24 17:02
 	 */
-	@RequestMapping(value = "/login")
+	@RequestMapping(value = "/login.html")
 	public String login() {
 		return "login";
 	}
@@ -28,7 +29,8 @@ public class LoginController {
 	 * @author wangjunjie
 	 * @date 2017/6/24 17:00
 	 */
-	@RequestMapping(value = "/index")
+	@RequiresAuthentication
+	@RequestMapping(value = "/index.html")
 	public String index() {
 		return "index";
 	}
@@ -37,7 +39,8 @@ public class LoginController {
 	 * @author wangjunjie
 	 * @date 2017/6/24 17:00
 	 */
-	@RequestMapping(value = "/welcome")
+	@RequiresAuthentication
+	@RequestMapping(value = "/welcome.html")
 	public String welcome() {
 		return "welcome";
 	}

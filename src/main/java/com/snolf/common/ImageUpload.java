@@ -1,4 +1,4 @@
-package com.snolf.util;
+package com.snolf.common;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;

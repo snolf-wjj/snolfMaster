@@ -36,14 +36,14 @@
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
           <label for="online">
-            <input type="checkbox" text="online" id="online" value="">
+            <input type="checkbox" name="rememberMe" id="rememberMe" value="1">
             使我保持登录状态</label>
         </div>
       </div>
       <div class="row cl">
         <div class="formControls col-xs-8 col-xs-offset-3">
           <input name="" type="button" onclick="login()" class="btn btn-success radius size-L" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;">
-          <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;">
+          <input name="" type="reset" onclick="rest()" class="btn btn-default radius size-L" value="&nbsp;重&nbsp;&nbsp;&nbsp;&nbsp;置&nbsp;">
         </div>
       </div>
     </form>
@@ -52,6 +52,7 @@
 <div class="footer">Copyright 逐梦 by SNOLF-MASTER v1.0</div>
 <#include "common/footer.ftl"/>
 <script type="text/javascript" src="${base}/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="${base}/lib/laypage/1.3/laypage.js"></script>
 <script type="text/javascript" src="${base}/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${base}/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <!--此乃百度统计代码，请自行删除-->
@@ -68,14 +69,23 @@ var _hmt = _hmt || [];
     function login() {
         if (!$("#form").valid())
             return;
-        $.post("${base}/user/login", $("#form").serializeArray(), function (data, status) {
+        $.post("${base}/system/rest/login", $("#form").serializeArray(), function (data, status) {
         	if ("0000" == data.code) {
-                layer.msg("登录成功", {icon: 6, time: 1000});
-                window.location.href = "index";
+                layer.msg(data.data.message, {icon: 6, time: 1000});
+//                window.location.href = "index";
+                window.location.href = data.data.url;
             } else {
                 layer.msg(data.msg, {icon: 5, time: 1000});
             }
         });
+    }
+    /**
+     * 清空输入框
+     */
+    function rest() {
+    	$("#loginName").val("");
+    	$("#password").val("");
+    	$("#rememberMe").attr("checked",'true');
     }
 
     $(function(){

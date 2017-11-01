@@ -1,22 +1,26 @@
 package com.snolf.system.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.snolf.common.Static;
+import com.snolf.common.model.TreeNodeZTree;
+import com.snolf.common.page.PageInfo;
+import com.snolf.common.util.TreeUtilZTree;
+import com.snolf.common.util.UUIDUtil;
+import com.snolf.common.util.ValidateUtil;
 import com.snolf.system.mapper.SysRoleAuthorityMapper;
 import com.snolf.system.mapper.SysRoleMapper;
+import com.snolf.system.mapper.SysUserRoleMapper;
 import com.snolf.system.model.SysRole;
 import com.snolf.system.model.SysRoleAuthority;
+import com.snolf.system.model.SysUserRole;
 import com.snolf.system.service.SysRoleService;
-import com.snolf.util.common.UUIDUtil;
-import com.snolf.util.common.ValidateUtil;
-import com.snolf.util.page.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IDEA
@@ -31,6 +35,8 @@ public class SysRoleServiceImpl implements SysRoleService{
 	private SysRoleMapper roleMapper;
 	@Resource
 	private SysRoleAuthorityMapper roleAuthorityMapper;
+	@Resource
+	private SysUserRoleMapper userRoleMapper;
 
 	@Override
 	public PageInfo<SysRole> queryList(Map<String, Object> map) throws Exception {
@@ -39,6 +45,38 @@ public class SysRoleServiceImpl implements SysRoleService{
 		List<SysRole> dataList = roleMapper.queryList(map);
 		PageInfo<SysRole> pageInfo = new PageInfo<>(dataList);
 		return pageInfo;
+	}
+
+	@Override
+	public JSONArray queryListAll(Map<String, Object> map) throws Exception {
+		ValidateUtil.paramRequired(map.get("userId"), "userId不能为空");
+		List<SysRole> dataList = roleMapper.queryList(map);
+		if (dataList.size() == 0) {
+			return null;
+		}
+		SysUserRole paramEntity = new SysUserRole();
+		paramEntity.setUserId(map.get("userId").toString());
+		List<SysUserRole> userRoleList = userRoleMapper.queryList(paramEntity);
+		List<TreeNodeZTree> tree = new ArrayList<>();
+		for (SysRole role : dataList) {
+			TreeNodeZTree node = new TreeNodeZTree();
+			node.setId(role.getId());
+			node.setName(role.getName());
+			node.setOpen(true);
+			node.setParentId("");
+			Map<String, Object> attributes = new HashMap<>();
+			attributes.put("roleKey", role.getRoleKey());
+			for (int i = 0; i < userRoleList.size(); i++) {
+				if (node.getId().equals(userRoleList.get(i).getRoleId())) {
+					node.setChecked(true);
+				}
+			}
+			node.setAttributes(attributes);
+			tree.add(node);
+		}
+		String jsonStr = JSON.toJSONStringWithDateFormat(TreeUtilZTree.generateTree(tree, ""), "yyyy-MM-dd HH:mm:ss");
+		JSONArray jsonArray = JSONArray.parseArray(jsonStr);
+		return jsonArray;
 	}
 
 	@Override
@@ -60,6 +98,7 @@ public class SysRoleServiceImpl implements SysRoleService{
 	@Override
 	public int delete(String id) throws Exception {
 		ValidateUtil.paramRequired(id, "id不能为空");
+		ValidateUtil.businessValidate(checkRoleUser(id), "该角色下存在用户，请先解除关联");
 		int result = roleMapper.deleteById(id);
 		//删除角色下的权限
 		SysRoleAuthority paramEntity = new SysRoleAuthority();
@@ -86,6 +125,7 @@ public class SysRoleServiceImpl implements SysRoleService{
 		String[] idsArray = ids.split(",");
 		int result = roleMapper.batchDelete(idsArray);
 		for (int i = 0; i < idsArray.length; i++) {
+			ValidateUtil.businessValidate(checkRoleUser(idsArray[i]), "选择的角色下存在用户，请先解除关联");
 			//删除角色下的权限
 			SysRoleAuthority paramEntity = new SysRoleAuthority();
 			paramEntity.setRoleId(idsArray[i]);
@@ -95,7 +135,7 @@ public class SysRoleServiceImpl implements SysRoleService{
 	}
 
 	@Override
-	public List<SysRoleAuthority> queryRoleAuth(String roleId) throws Exception {
+	public List<SysRoleAuthority> queryRoleAuthList(String roleId) throws Exception {
 		SysRoleAuthority paramEntity = new SysRoleAuthority();
 		paramEntity.setRoleId(roleId);
 		List<SysRoleAuthority> result = roleAuthorityMapper.queryList(paramEntity);
@@ -149,5 +189,21 @@ public class SysRoleServiceImpl implements SysRoleService{
 		} else {
 			return Boolean.FALSE;
 		}
+	}
+
+	/**
+	 * 根据角色id校验改角色下是否有用户
+	 * @param roleId
+	 * @return
+	 * @throws Exception
+	 */
+	private Boolean checkRoleUser(String roleId) throws Exception {
+		SysUserRole paramEntity = new SysUserRole();
+		paramEntity.setRoleId(roleId);
+		List<SysUserRole> checkList = userRoleMapper.queryList(paramEntity);
+		if (checkList.size() > 0) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 }

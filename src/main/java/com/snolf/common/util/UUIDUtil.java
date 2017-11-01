@@ -1,4 +1,4 @@
-package com.snolf.util.common;
+package com.snolf.common.util;
 
 import java.util.UUID;
 

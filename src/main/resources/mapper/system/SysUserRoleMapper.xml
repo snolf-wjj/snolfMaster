@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.snolf.system.mapper.SysUserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.snolf.system.model.SysUserRole" >
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="role_key" property="roleKey" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    role_id, role_key, role_Name, user_id, user_name
+  </sql>
+
+  <select id="query" resultMap="BaseResultMap" parameterType="com.snolf.system.model.SysUserRole" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_user_role
+    <where>
+      <if test="roleId != null">
+        and role_id = #{roleId,jdbcType=VARCHAR}
+      </if>
+      <if test="roleKey != null">
+        and role_key = #{roleKey,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="userName != null">
+        and user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="queryList" resultMap="BaseResultMap" parameterType="com.snolf.system.model.SysUserRole" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_user_role
+    <where>
+      <if test="roleId != null">
+        and role_id = #{roleId,jdbcType=VARCHAR}
+      </if>
+      <if test="roleKey != null">
+        and role_key = #{roleKey,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="userName != null">
+        and user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <insert id="insert" parameterType="com.snolf.system.model.SysUserRole">
+    insert into sys_user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="roleKey != null" >
+        role_key,
+      </if>
+      <if test="roleName != null" >
+        role_Name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleKey != null" >
+        #{roleKey,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="com.snolf.system.model.SysUserRole">
+    delete from sys_user_role
+    <where>
+      <if test="roleId != null">
+        and role_id = #{roleId,jdbcType=VARCHAR}
+      </if>
+      <if test="roleKey != null">
+        and role_key = #{roleKey,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null">
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="userName != null">
+        and user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </delete>
+</mapper>

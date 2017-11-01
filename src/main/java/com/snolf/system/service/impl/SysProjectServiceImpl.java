@@ -2,11 +2,11 @@ package com.snolf.system.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.snolf.common.Static;
+import com.snolf.common.page.PageInfo;
+import com.snolf.common.util.ValidateUtil;
 import com.snolf.system.mapper.SysProjectMapper;
 import com.snolf.system.model.SysProject;
 import com.snolf.system.service.SysProjectService;
-import com.snolf.util.common.ValidateUtil;
-import com.snolf.util.page.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

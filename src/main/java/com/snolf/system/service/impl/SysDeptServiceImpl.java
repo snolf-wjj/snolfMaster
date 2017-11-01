@@ -5,13 +5,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.snolf.common.Static;
 import com.snolf.common.exception.ParamMistakeException;
+import com.snolf.common.model.TreeNodeZTree;
+import com.snolf.common.page.PageInfo;
+import com.snolf.common.util.TreeUtilZTree;
+import com.snolf.common.util.UUIDUtil;
 import com.snolf.system.mapper.SysDeptMapper;
 import com.snolf.system.model.SysDept;
 import com.snolf.system.service.SysDeptService;
-import com.snolf.util.common.TreeUtilZTree;
-import com.snolf.util.common.UUIDUtil;
-import com.snolf.util.model.TreeNodeZTree;
-import com.snolf.util.page.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

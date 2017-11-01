@@ -112,17 +112,6 @@
 
                 });
             },
-        	getRoleAuths: function () {
-                this.$http.get("${base}/system/rest/role/getAuths?id=" + this.role.roleId).then(function(response) {
-                    var data = response.data;
-                    if ("0000" == data.code) {
-                        log_info(jsonToStr(data));
-                    } else {
-                        $.Huimodalalert(data.msg,2000);
-                    }
-
-                });
-            },
             submit: function() {
                 this.role.roleAuth = [];
                 var nodes = treeObj.getCheckedNodes(true);

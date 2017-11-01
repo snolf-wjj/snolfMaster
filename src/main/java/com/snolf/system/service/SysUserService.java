@@ -1,8 +1,10 @@
 package com.snolf.system.service;
 
+import com.snolf.common.page.PageInfo;
 import com.snolf.system.model.SysUser;
-import com.snolf.util.page.PageInfo;
+import com.snolf.system.model.SysUserRole;
 
+import java.util.List;
 import java.util.Map;
 
 public interface SysUserService {
@@ -50,4 +52,21 @@ public interface SysUserService {
 	int batchDelete(String ids) throws Exception;
 	
 	int insert(SysUser user) throws Exception;
+
+	/**
+	 * 给用户分配角色
+	 * @param paramData
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	int assignUserRole(List<SysUserRole> paramData, String userId) throws Exception;
+
+	/**
+	 * 根据用户id获取角色列表
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	List<SysUserRole> queryUserRoleList(String userId) throws Exception;
 }

@@ -15,7 +15,7 @@
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
     <result column="del_time" property="delTime" jdbcType="TIMESTAMP" />
     <result column="del_user" property="delUser" jdbcType="VARCHAR" />
-    <result column="is_del" property="isDel" jdbcType="TINYINT" />
+    <result column="is_del" property="del" jdbcType="TINYINT" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >

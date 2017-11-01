@@ -1,8 +1,9 @@
 package com.snolf.system.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.snolf.common.page.PageInfo;
 import com.snolf.system.model.SysRole;
 import com.snolf.system.model.SysRoleAuthority;
-import com.snolf.util.page.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,14 @@ public interface SysRoleService {
 	 */
 	PageInfo<SysRole> queryList(Map<String, Object> map) throws Exception;
 
+	/**
+	 * 获取所有角色，用户分配角色用
+	 * @param map
+	 * @return
+	 * @throws Exception
+	 */
+	JSONArray queryListAll(Map<String, Object> map) throws Exception;
+
 	SysRole query(SysRole paramEntity) throws Exception;
 
 	int update(SysRole paramEntity) throws Exception;
@@ -31,7 +40,13 @@ public interface SysRoleService {
 
 	int insert(SysRole paramEntity) throws Exception;
 
-	List<SysRoleAuthority> queryRoleAuth(String roleId) throws Exception;
+	/**
+	 * 根据角色id获取分配权限列表
+	 * @param roleId
+	 * @return
+	 * @throws Exception
+	 */
+	List<SysRoleAuthority> queryRoleAuthList(String roleId) throws Exception;
 
 	int assignRoleAuth(List<SysRoleAuthority> paramData, String roleId) throws Exception;
 

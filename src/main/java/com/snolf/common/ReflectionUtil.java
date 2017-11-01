@@ -1,4 +1,4 @@
-package com.snolf.util;
+package com.snolf.common;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;

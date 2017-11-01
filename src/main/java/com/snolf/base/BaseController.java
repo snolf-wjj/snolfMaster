@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -14,6 +15,8 @@ import java.util.Map;
  * Time: 11:34
  */
 public class BaseController {
+	protected Map<String, Object> resultMap = new LinkedHashMap<>();
+
 	/**
 	 * 获取request参数，并转为 Map<String, Object>
 	 * @author wangjunjie

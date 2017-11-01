@@ -11,8 +11,6 @@
     <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
     <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
     <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
-    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
-    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="user_status" property="userStatus" jdbcType="INTEGER" />
 
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -21,11 +19,11 @@
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
     <result column="del_time" property="delTime" jdbcType="TIMESTAMP" />
     <result column="del_user" property="delUser" jdbcType="VARCHAR" />
-    <result column="is_del" property="isDel" jdbcType="TINYINT" />
+    <result column="is_del" property="del" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, login_name, user_name, password, last_login_time, last_login_ip,
-    login_time, login_ip, role_id, user_status, create_time, create_user, update_time, update_user,
+    login_time, login_ip, user_status, create_time, create_user, update_time, update_user,
     del_time, del_user, is_del, remark
   </sql>
 
@@ -38,7 +36,6 @@
   <select id="query" resultMap="BaseResultMap" parameterType="com.snolf.system.model.SysUser" >
     select 
     <include refid="Base_Column_List" />
-   <!-- ,(select r.text as role_name from sys_role r where r.id = role_id) role_name-->
     from sys_user
     <where>
     	<if test="id != null">
@@ -59,10 +56,9 @@
   <select id="queryList" resultMap="BaseResultMap" parameterType="java.util.Map" >
     select 
     <include refid="Base_Column_List" />
-    <!--,(select r.text as role_name from sys_role r where r.id = role_id) role_name-->
     from sys_user
     <where>
-    	id&lt;&gt;"0"
+          id&lt;&gt;"0"
     	<if test="id != null">
     		and id=#{id}
     	</if>

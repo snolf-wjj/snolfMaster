@@ -44,7 +44,7 @@
         and role_key = #{roleKey,jdbcType=VARCHAR}
       </if>
       <if test="authId != null">
-        and role_id = #{authId,jdbcType=INTEGER}
+        and auth_id = #{authId,jdbcType=INTEGER}
       </if>
       <if test="authKey != null">
         and auth_key = #{authKey,jdbcType=VARCHAR}
@@ -94,7 +94,7 @@
         and role_key = #{roleKey,jdbcType=VARCHAR}
       </if>
       <if test="authId != null">
-        and role_id = #{authId,jdbcType=INTEGER}
+        and auth_id = #{authId,jdbcType=INTEGER}
       </if>
       <if test="authKey != null">
         and auth_key = #{authKey,jdbcType=VARCHAR}

@@ -1,6 +1,6 @@
-package com.snolf.util.common;
+package com.snolf.common.util;
 
-import com.snolf.util.model.TreeNodeZTree;
+import com.snolf.common.model.TreeNodeZTree;
 
 import java.util.ArrayList;
 import java.util.Collections;
