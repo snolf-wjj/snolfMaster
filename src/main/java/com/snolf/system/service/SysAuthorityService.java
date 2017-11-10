@@ -56,4 +56,12 @@ public interface SysAuthorityService {
 	 * @throws Exception
 	 */
 	List<String> queryUrlByRoleId(String roleId) throws Exception;
+
+	/**
+	 * 根据角色id获取权限列表（生成左侧导航用）
+	 * @param roleId
+	 * @return
+	 * @throws Exception
+	 */
+	JSONArray queryAuthorityByRoleId(String roleId) throws Exception;
 }

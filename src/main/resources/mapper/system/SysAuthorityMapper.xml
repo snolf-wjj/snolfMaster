@@ -228,4 +228,11 @@
     from sys_authority a, sys_role_authority ra
     where is_del = 0 and a.id = ra.auth_id and ra.role_id = #{roleId,jdbcType=VARCHAR}
   </select>
+
+  <select id="queryAuthorityByRoleId" resultMap="BaseResultMap"  parameterType="java.lang.String" >
+    select
+    a.*
+    from sys_authority a, sys_role_authority ra
+    where is_del = 0 and a.id = ra.auth_id and a.type != 3 and ra.role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
 </mapper>

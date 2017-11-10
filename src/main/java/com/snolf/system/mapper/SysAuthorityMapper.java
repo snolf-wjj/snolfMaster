@@ -10,4 +10,6 @@ import java.util.List;
 public interface SysAuthorityMapper extends BaseMapper<SysAuthority> {
 
 	List<String> queryUrlByRoleId(String roleId) throws Exception;
+
+	List<SysAuthority> queryAuthorityByRoleId(String roleId) throws Exception;
 }

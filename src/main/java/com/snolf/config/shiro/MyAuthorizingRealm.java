@@ -1,5 +1,6 @@
 package com.snolf.config.shiro;
 
+import com.snolf.common.util.DateUtil;
 import com.snolf.common.util.LoggerUtils;
 import com.snolf.config.shiro.token.TokenManager;
 import com.snolf.system.model.SysAuthority;
@@ -106,6 +107,8 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
 		} else {
 			Session session = TokenManager.getSession();
 			session.setAttribute("userName", checkUser.getUserName());
+			session.setAttribute("lastLoginIp", checkUser.getLoginIp());
+			session.setAttribute("lastLoginTime", DateUtil.formatDateString(checkUser.getLoginTime(), DateUtil.DATETIME_PATTERN_19));
 			//更新用户登录信息
 			SysUser paramEntity = new SysUser();
 			paramEntity.setId(checkUser.getId());

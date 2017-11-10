@@ -2,6 +2,7 @@ package com.snolf.system.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.snolf.common.Static;
 import com.snolf.common.model.TreeNodeZTree;
@@ -189,6 +190,41 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 	public List<String> queryUrlByRoleId(String roleId) throws Exception {
 		List<String> dataList = authorityMapper.queryUrlByRoleId(roleId);
 		return dataList;
+	}
+
+	@Override
+	public JSONArray queryAuthorityByRoleId(String roleId) throws Exception {
+		ValidateUtil.paramRequired(roleId, "roleId不能为空");
+		List<SysAuthority> dataList = authorityMapper.queryAuthorityByRoleId(roleId);
+		if (dataList.size() == 0) {
+			return null;
+		}
+		JSONArray authArray = new JSONArray();
+		for (SysAuthority auth : dataList) {
+			// 添加一级菜单
+			if ("0000".equals(auth.getParentId())) {
+				JSONObject firstMenu = new JSONObject();
+				firstMenu.put("id", auth.getId());
+				firstMenu.put("name", auth.getAuthName());
+				firstMenu.put("url", auth.getUrl());
+				firstMenu.put("parentId", auth.getParentId());
+				JSONArray submenuArray = new JSONArray();
+				for (int i = 0; i < dataList.size(); i++) {
+					// 添加二级菜单
+					if (dataList.get(i).getParentId().equals(String.valueOf(auth.getId()))) {
+						JSONObject submenu = new JSONObject();
+						submenu.put("id", dataList.get(i).getId());
+						submenu.put("name", dataList.get(i).getAuthName());
+						submenu.put("url", dataList.get(i).getUrl());
+						submenu.put("parentId", dataList.get(i).getParentId());
+						submenuArray.add(submenu);
+					}
+				}
+				firstMenu.put("submenu", submenuArray);
+				authArray.add(firstMenu);
+			}
+		}
+		return authArray;
 	}
 
 	/**

@@ -12,6 +12,7 @@
     <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
     <result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
     <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
 
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="create_user" property="createUser" jdbcType="VARCHAR" />
@@ -23,7 +24,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     id, login_name, user_name, password, last_login_time, last_login_ip,
-    login_time, login_ip, user_status, create_time, create_user, update_time, update_user,
+    login_time, login_ip, user_status, role_id, create_time, create_user, update_time, update_user,
     del_time, del_user, is_del, remark
   </sql>
 

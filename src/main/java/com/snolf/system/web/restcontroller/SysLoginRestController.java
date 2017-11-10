@@ -1,11 +1,16 @@
 package com.snolf.system.web.restcontroller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.snolf.base.BaseController;
 import com.snolf.common.contact.SystemStatusCode;
+import com.snolf.common.model.SystemInfo;
 import com.snolf.common.response.ResponseExceptionUtil;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
 import com.snolf.system.model.SysUser;
+import com.snolf.system.model.SysUserRole;
+import com.snolf.system.service.SysAuthorityService;
+import com.snolf.system.service.SysRoleService;
 import com.snolf.system.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +40,10 @@ import java.util.Map;
 public class SysLoginRestController extends BaseController{
 	@Resource
 	private SysUserService sysUserService;
+	@Resource
+	private SysRoleService sysRoleService;
+	@Resource
+	private SysAuthorityService sysAuthorityService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -42,12 +52,13 @@ public class SysLoginRestController extends BaseController{
 			UsernamePasswordToken token = new UsernamePasswordToken(loginName, password);
 			token.setRememberMe(rememberMe);
 			SecurityUtils.getSubject().login(token);
+
 			SysUser userToken = (SysUser) SecurityUtils.getSubject().getPrincipal();
 			/**
 			 * shiro 获取登录之前的地址
 			 */
 			SavedRequest savedRequest = WebUtils.getSavedRequest(request);
-			String url = null ;
+			String url = null;
 			if(null != savedRequest){
 				url = savedRequest.getRequestUrl();
 			}
@@ -77,6 +88,48 @@ public class SysLoginRestController extends BaseController{
 		try {
 			SecurityUtils.getSubject().logout();
 			return ResponseUtil.success("退出成功");
+		} catch (Exception e) {
+			return ResponseExceptionUtil.handleException(e);
+		}
+	}
+
+	/**
+	 * 获取系统信息
+	 * @return
+	 */
+	@RequiresAuthentication
+	@RequestMapping(value="getSystemInfo",method =RequestMethod.GET)
+	@ResponseBody
+	public ResponseResult<SystemInfo> getSystemInfo(HttpServletRequest request){
+		try {
+			return ResponseUtil.success(SystemInfo.getInstance(request));
+		} catch (Exception e) {
+			return ResponseExceptionUtil.handleException(e);
+		}
+	}
+
+	/**
+	 * 获取系统菜单信息
+	 * @return
+	 */
+	@RequiresAuthentication
+	@RequestMapping(value="getSystemMenu",method =RequestMethod.GET)
+	@ResponseBody
+	public ResponseResult<JSONArray> getSystemMenu(HttpServletRequest request){
+		try {
+			// 获取登录用户的信息
+			SysUser userToken = (SysUser) SecurityUtils.getSubject().getPrincipal();
+			// 获取角色信息
+			String roleId = "";
+			if (StringUtils.isNotBlank(userToken.getRoleId())) {
+				roleId = userToken.getRoleId();
+			} else {
+				List<SysUserRole> roles = sysUserService.queryUserRoleList(userToken.getId());
+				roleId = roles.get(0).getRoleId();
+			}
+			JSONArray authArray = sysAuthorityService.queryAuthorityByRoleId(roleId);
+
+			return ResponseUtil.success(authArray);
 		} catch (Exception e) {
 			return ResponseExceptionUtil.handleException(e);
 		}
