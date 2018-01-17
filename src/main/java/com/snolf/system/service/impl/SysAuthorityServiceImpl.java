@@ -10,8 +10,10 @@ import com.snolf.common.page.PageInfo;
 import com.snolf.common.util.TreeUtilZTree;
 import com.snolf.common.util.ValidateUtil;
 import com.snolf.system.mapper.SysAuthorityMapper;
+import com.snolf.system.mapper.SysProjectMapper;
 import com.snolf.system.mapper.SysRoleAuthorityMapper;
 import com.snolf.system.model.SysAuthority;
+import com.snolf.system.model.SysProject;
 import com.snolf.system.model.SysRoleAuthority;
 import com.snolf.system.service.SysAuthorityService;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 	private SysAuthorityMapper authorityMapper;
 	@Resource
 	private SysRoleAuthorityMapper roleAuthorityMapper;
+	@Resource
+	private SysProjectMapper projectMapper;
 	
 	@Override
 	public PageInfo<SysAuthority> queryList(Map<String,Object> map) throws Exception{
@@ -193,9 +197,19 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 	}
 
 	@Override
-	public JSONArray queryAuthorityByRoleId(String roleId) throws Exception {
+	public JSONArray queryAuthorityByRoleId(String roleId, String proKey) throws Exception {
 		ValidateUtil.paramRequired(roleId, "roleId不能为空");
-		List<SysAuthority> dataList = authorityMapper.queryAuthorityByRoleId(roleId);
+		ValidateUtil.paramRequired(proKey, "proKey不能为空");
+		Map<String, Object> map = new HashMap<>();
+		map.put("roleId", roleId);
+		// 获取当前项目
+		SysProject paramEntity = new SysProject();
+		paramEntity.setProKey(proKey);
+		SysProject project = projectMapper.query(paramEntity);
+		if (null != project) {
+			map.put("proId", project.getId());
+		}
+		List<SysAuthority> dataList = authorityMapper.queryAuthorityByRoleId(map);
 		if (dataList.size() == 0) {
 			return null;
 		}
@@ -215,7 +229,7 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 						JSONObject submenu = new JSONObject();
 						submenu.put("id", dataList.get(i).getId());
 						submenu.put("name", dataList.get(i).getAuthName());
-						submenu.put("url", dataList.get(i).getUrl());
+						submenu.put("url", project.getUrl() + dataList.get(i).getUrl());
 						submenu.put("parentId", dataList.get(i).getParentId());
 						submenuArray.add(submenu);
 					}

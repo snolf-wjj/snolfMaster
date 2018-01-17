@@ -103,11 +103,26 @@ var _hmt = _hmt || [];
             },
             messages:{
                 loginName:{
+                    required:"请输入账户名",
                     isRightfulString:"只能输入英文字母大小写、数字、下划线"
+                },
+                password:{
+                    required:"请输入密码",
                 }
             },
             onkeyup:false,
-            success:"valid"
+            success:"valid",
+            unhighlight: function (element, errorClass, validClass) { //验证通过
+                $(element).tooltip('destroy').removeClass(errorClass);
+            },
+            errorPlacement: function (error, element) {
+                if ($(element).next("div").hasClass("tooltip")) {
+                    $(element).attr("data-original-title", $(error).text()).tooltip("show");
+                } else {
+                    $(element).attr("title",
+                            $(error).text()).tooltip("show");
+                }
+            }
         });
     });
 

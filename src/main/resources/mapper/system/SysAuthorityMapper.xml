@@ -229,10 +229,12 @@
     where is_del = 0 and a.id = ra.auth_id and ra.role_id = #{roleId,jdbcType=VARCHAR}
   </select>
 
-  <select id="queryAuthorityByRoleId" resultMap="BaseResultMap"  parameterType="java.lang.String" >
+  <select id="queryAuthorityByRoleId" resultMap="BaseResultMap"  parameterType="java.util.Map" >
     select
     a.*
     from sys_authority a, sys_role_authority ra
-    where is_del = 0 and a.id = ra.auth_id and a.type != 3 and ra.role_id = #{roleId,jdbcType=VARCHAR}
+    where
+    is_del = 0 and a.id = ra.auth_id and a.type != 3
+    and ra.role_id = #{roleId,jdbcType=VARCHAR} and a.pro_id = #{proId,jdbcType=INTEGER}
   </select>
 </mapper>

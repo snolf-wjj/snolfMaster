@@ -32,4 +32,10 @@ public class SysUserController {
 	public String assignRolePage() {
 		return "system/user/assignRole";
 	}
+
+	@RequiresPermissions("/system/user/show.html")
+	@RequestMapping(value = "/show")
+	public String show() {
+		return "system/user/show";
+	}
 }

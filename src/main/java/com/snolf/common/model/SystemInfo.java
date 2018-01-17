@@ -154,7 +154,7 @@ public class SystemInfo {
 	}
 
 	/**
-	 * 获取服务器信息
+	 * 获取服           务器信息
 	 * @param request
 	 */
 	public void ServerInfo(HttpServletRequest request){

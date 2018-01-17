@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,13 +54,12 @@ public class SysProjectRestController extends BaseController{
 	@RequestMapping(value = "/listAll")
 	@ResponseBody
 	public ResponseResult<List<SysProject>> listAll(HttpServletRequest request) {
-		Map<String,Object> paramsMap = new HashMap<>();
+		Map<String,Object> paramsMap = getParameters(request);
 		List<SysProject> dataList = null;
 		try {
 			dataList = sysProjectService.queryListAll(paramsMap);
 			return ResponseUtil.success(dataList);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return ResponseExceptionUtil.handleException(e);
 		}
 	}

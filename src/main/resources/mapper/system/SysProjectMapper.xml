@@ -13,7 +13,7 @@
     <result column="update_user" property="updateUser" jdbcType="VARCHAR" />
     <result column="del_time" property="delTime" jdbcType="TIMESTAMP" />
     <result column="del_user" property="delUser" jdbcType="VARCHAR" />
-    <result column="is_del" property="isDel" jdbcType="TINYINT" />
+    <result column="is_del" property="del" jdbcType="TINYINT" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
 
@@ -52,6 +52,9 @@
       </if>
       <if test="name != null and name != ''">
         and name like concat('%', #{name,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="status != null">
+        and status = #{status, jdbcType=TINYINT}
       </if>
     </where>
     ORDER BY create_time DESC
@@ -152,8 +155,8 @@
       <if test="delUser != null" >
         del_user = #{delUser,jdbcType=VARCHAR},
       </if>
-      <if test="isDel != null" >
-        is_del = #{isDel,jdbcType=TINYINT},
+      <if test="del != null" >
+        is_del = #{del,jdbcType=TINYINT},
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},

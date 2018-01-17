@@ -4,9 +4,11 @@ import com.snolf.common.util.DateUtil;
 import com.snolf.common.util.LoggerUtils;
 import com.snolf.config.shiro.token.TokenManager;
 import com.snolf.system.model.SysAuthority;
+import com.snolf.system.model.SysProject;
 import com.snolf.system.model.SysUser;
 import com.snolf.system.model.SysUserRole;
 import com.snolf.system.service.SysAuthorityService;
+import com.snolf.system.service.SysProjectService;
 import com.snolf.system.service.SysRoleService;
 import com.snolf.system.service.SysUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +36,9 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
 	private SysRoleService sysRoleService;
 	@Resource
 	private SysAuthorityService sysAuthorityService;
+	@Resource
+	private SysProjectService sysProjectService;
+
 
 	/**
 	 * 角色授权
@@ -96,16 +101,23 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
 		LoggerUtils.debug(MyAuthorizingRealm.class, "正在验证身份...");
 		UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 		SysUser checkUser = null;
+		// 获取初始项目地址
+		SysProject paramEntity_project = new SysProject();
+		paramEntity_project.setProKey("master");
+		SysProject project = null;
 		try {
 			checkUser = sysUserService.login(token.getUsername(), String.valueOf(token.getPassword()));
+			project = sysProjectService.query(paramEntity_project);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new UnknownAccountException("服务器异常");
 		}
 		//登录判断
 		if(null == checkUser) {
 			throw new AccountException("帐号或密码不正确！");
 		} else {
 			Session session = TokenManager.getSession();
+			session.setAttribute("proUrl", project.getUrl());
+			session.setAttribute("userId", checkUser.getId());
 			session.setAttribute("userName", checkUser.getUserName());
 			session.setAttribute("lastLoginIp", checkUser.getLoginIp());
 			session.setAttribute("lastLoginTime", DateUtil.formatDateString(checkUser.getLoginTime(), DateUtil.DATETIME_PATTERN_19));

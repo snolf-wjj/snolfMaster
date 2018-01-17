@@ -34,6 +34,8 @@ public interface SysUserService {
 	SysUser query(SysUser user) throws Exception;
 	
 	int update(SysUser user) throws Exception;
+
+	int updatePassword(String oldPassword, String newPassword) throws Exception;
 	/**
 	 * 更新用户登录信息
 	 * @author wangjunjie

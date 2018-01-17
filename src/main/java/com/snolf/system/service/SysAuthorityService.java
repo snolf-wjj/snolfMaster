@@ -58,10 +58,11 @@ public interface SysAuthorityService {
 	List<String> queryUrlByRoleId(String roleId) throws Exception;
 
 	/**
-	 * 根据角色id获取权限列表（生成左侧导航用）
+	 * 根据角色id和项目标识获取权限列表（生成左侧导航用）
 	 * @param roleId
+	 * @param proKey
 	 * @return
 	 * @throws Exception
 	 */
-	JSONArray queryAuthorityByRoleId(String roleId) throws Exception;
+	JSONArray queryAuthorityByRoleId(String roleId, String proKey) throws Exception;
 }

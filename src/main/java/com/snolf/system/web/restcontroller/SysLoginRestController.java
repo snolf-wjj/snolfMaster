@@ -7,6 +7,7 @@ import com.snolf.common.model.SystemInfo;
 import com.snolf.common.response.ResponseExceptionUtil;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
+import com.snolf.config.shiro.token.TokenManager;
 import com.snolf.system.model.SysUser;
 import com.snolf.system.model.SysUserRole;
 import com.snolf.system.service.SysAuthorityService;
@@ -64,7 +65,7 @@ public class SysLoginRestController extends BaseController{
 			}
 			//如果登录之前没有地址，那么就跳转到首页。
 			if(StringUtils.isBlank(url) || url.contains("login")){
-				url = request.getContextPath() + "/system/index.html";
+				url = TokenManager.getSession().getAttribute("proUrl") + "/system/index.html";
 			}
 
 			resultMap.put("url", url);
@@ -116,6 +117,11 @@ public class SysLoginRestController extends BaseController{
 	@RequestMapping(value="getSystemMenu",method =RequestMethod.GET)
 	@ResponseBody
 	public ResponseResult<JSONArray> getSystemMenu(HttpServletRequest request){
+		String proKey = request.getParameter("proKey");
+		if (StringUtils.isBlank(proKey)) {
+			// 如果项目标识为空，默认获取管理系统菜单
+			proKey = "master";
+		}
 		try {
 			// 获取登录用户的信息
 			SysUser userToken = (SysUser) SecurityUtils.getSubject().getPrincipal();
@@ -127,7 +133,7 @@ public class SysLoginRestController extends BaseController{
 				List<SysUserRole> roles = sysUserService.queryUserRoleList(userToken.getId());
 				roleId = roles.get(0).getRoleId();
 			}
-			JSONArray authArray = sysAuthorityService.queryAuthorityByRoleId(roleId);
+			JSONArray authArray = sysAuthorityService.queryAuthorityByRoleId(roleId, proKey);
 
 			return ResponseUtil.success(authArray);
 		} catch (Exception e) {

@@ -1,6 +1,6 @@
 package com.snolf.config.shiro.filter;
 
-import com.snolf.common.contact.SystemStatusCode.sysMsg;
+import com.snolf.common.contact.SystemStatusCode;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
 import com.snolf.common.util.LoggerUtils;
@@ -54,17 +54,6 @@ public class PermissionFilter extends AccessControlFilter{
 		if(subject.isPermitted(uri)){
 			return Boolean.TRUE;
 		}
-		if(ShiroFilterUtils.isAjax(request)){
-			ResponseResult<String> result = new ResponseResult<>();
-			result.setCode(sysMsg.L_0002.getCode());
-			result.setMsg("\u5F53\u524D\u7528\u6237\u6CA1\u6709\u767B\u5F55\uFF01");//当前用户没有登录！
-			ResponseUtil.info((HttpServletResponse)response, result);
-//			Map<String,String> resultMap = new HashMap<String, String>();
-//			LoggerUtils.debug(getClass(), "当前用户没有登录，并且是Ajax请求！");
-//			resultMap.put("login_status", "300");
-//			resultMap.put("message", "\u5F53\u524D\u7528\u6237\u6CA1\u6709\u767B\u5F55\uFF01");//当前用户没有登录！
-//			ShiroFilterUtils.out(response, resultMap);
-		}
 		return Boolean.FALSE;
 	}
 
@@ -84,7 +73,12 @@ public class PermissionFilter extends AccessControlFilter{
 			saveRequest(request);
 			WebUtils.issueRedirect(request, response, ShiroFilterUtils.LOGIN_URL);
 		} else {
-			if (StringUtils.hasText(ShiroFilterUtils.UNAUTHORIZED)) {//如果有未授权页面跳转过去
+			if(ShiroFilterUtils.isAjax(request)){
+				ResponseResult<String> result = new ResponseResult<>();
+				result.setCode(SystemStatusCode.sysMsg.L_0002.getCode());
+				result.setMsg("当前用户没有权限");//当前用户没有登录！
+				ResponseUtil.info((HttpServletResponse)response, result);
+			} else if (StringUtils.hasText(ShiroFilterUtils.UNAUTHORIZED)) {//如果有未授权页面跳转过去
 				WebUtils.issueRedirect(request, response, ShiroFilterUtils.UNAUTHORIZED);
 			} else {//否则返回401未授权状态码
 				WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED);

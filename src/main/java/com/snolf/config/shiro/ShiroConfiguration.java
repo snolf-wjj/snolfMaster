@@ -2,7 +2,6 @@ package com.snolf.config.shiro;
 
 import com.snolf.common.util.LoggerUtils;
 import com.snolf.config.shiro.filter.PermissionFilter;
-import com.snolf.system.service.SysAuthorityService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import javax.annotation.Resource;
 import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,8 +27,6 @@ import java.util.Map;
 @Configuration
 public class ShiroConfiguration {
 	public static Logger log = LoggerFactory.getLogger(ShiroConfiguration.class);
-	@Resource
-	private SysAuthorityService sysAuthorityService;
 
 	/**
 	 * LifecycleBeanPostProcessor，这是个DestructionAwareBeanPostProcessor的子类，

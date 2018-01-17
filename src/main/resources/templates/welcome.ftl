@@ -8,7 +8,7 @@
     <p class="f-r"><script src="${base}/common/peopleClock.js" charset="Shift_JIS"></script></p>
     <p class="f-r"><script src="${base}/common/fish.js" charset="Shift_JIS"></script></p>
 	<p class="f-20 text-success">欢迎使用SNOLF-MASTER <span class="f-14">v1.0</span>系统！</p>
-	<p>上次登录IP：${lastLoginIp}  上次登录时间：${lastLoginTime}</p>
+	<p>上次登录IP：${lastLoginIp}  上次登录时间：${lastLoginTime}</p>${springMacroRequestContext.getContextUrl("")}
 	<#--<table class="table table-border table-bordered table-bg">-->
 		<#--<thead>-->
 			<#--<tr>-->
@@ -91,7 +91,7 @@
 			</tr>
 			<tr>
 				<td>服务器当前时间</td>
-				<td>{{systemInfo.os_date}}</td>
+				<td>{{systemInfo.os_date|vTime}}</td>
 			</tr>
 			<tr>
 				<td>系统CPU个数</td>
@@ -118,11 +118,11 @@
 				<td>{{systemInfo.server_port}}</td>
 			</tr>
 			<tr>
-				<td>服务器地址</td>
+				<td>客户端地址</td>
 				<td>{{systemInfo.server_addr}}</td>
 			</tr>
 			<tr>
-				<td>客户端地址</td>
+				<td>客户端主机名</td>
 				<td>{{systemInfo.server_host}}</td>
 			</tr>
             <tr>
@@ -179,6 +179,11 @@
                     }
 
                 });
+            }
+        },
+        filters: {
+            vTime: function (value) {
+                return formatDate(value, dateFormat.DATE_FORMAT_19H);
             }
         }
 

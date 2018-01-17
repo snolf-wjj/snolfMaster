@@ -61,7 +61,7 @@
 	</form>
     <div id="menuContent" class="menuContent" style="position: absolute; left: 52px; top: 112px;display:none;">
         <ul id="treeDemo" class="ztree" style="margin-top:0; width: 180px; height: 170px; -moz-user-select: none;"></ul>
-    </div>p
+    </div>
 </article>
 <#include "../../common/footer.ftl"/>
 <!--请在下方写此页面业务相关的脚本--> 
@@ -163,7 +163,18 @@ $(function(){
 			
 		},
 		onkeyup:false,
-		success:"valid"
+		success:"valid",
+        unhighlight: function (element, errorClass, validClass) { //验证通过
+            $(element).tooltip('destroy').removeClass(errorClass);
+        },
+        errorPlacement: function (error, element) {
+            if ($(element).next("div").hasClass("tooltip")) {
+                $(element).attr("data-original-title", $(error).text()).tooltip("show");
+            } else {
+                $(element).attr("title",
+                        $(error).text()).tooltip("show");
+            }
+        }
 	});
 });
 

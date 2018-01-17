@@ -8,6 +8,7 @@ import com.snolf.common.response.ResponseExceptionUtil;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
 import com.snolf.common.util.ValidateUtil;
+import com.snolf.config.shiro.token.TokenManager;
 import com.snolf.system.model.SysUser;
 import com.snolf.system.model.SysUserRole;
 import com.snolf.system.service.SysUserService;
@@ -121,6 +122,7 @@ public class SysUserRestController extends BaseController {
 		}
 	}
 
+	@RequiresPermissions("/system/rest/user/get")
 	@RequestMapping("get")
 	@ResponseBody
 	public ResponseResult<SysUser> get(String id) {
@@ -165,6 +167,27 @@ public class SysUserRestController extends BaseController {
 			List<SysUserRole> dataParams = JSON.parseArray(dataParam, SysUserRole.class);
 			sysUserService.assignUserRole(dataParams, userId);
 			return ResponseUtil.success("操作成功");
+		} catch (Exception e) {
+			return ResponseExceptionUtil.handleException(e);
+		}
+	}
+
+	@RequiresPermissions("/system/rest/user/updatePassword")
+	@RequestMapping(value = "/updatePassword")
+	@ResponseBody
+	public ResponseResult<String> updatePassword(String oldPassword, String newPassword) {
+		// 获取登录用户的信息
+		SysUser userToken = TokenManager.getToken();
+		if (!userToken.getPassword().equals(oldPassword)) {
+			return ResponseUtil.error(SystemStatusCode.sysMsg.L_0002.getCode(), "旧密码不正确");
+		}
+		try {
+			int result = sysUserService.updatePassword(oldPassword, newPassword);
+			if (result == 1){
+				return ResponseUtil.success("操作成功");
+			} else {
+				return ResponseUtil.error(SystemStatusCode.sysMsg.L_0001.getCode(), SystemStatusCode.sysMsg.L_0001.getMsg());
+			}
 		} catch (Exception e) {
 			return ResponseExceptionUtil.handleException(e);
 		}

@@ -5,6 +5,7 @@ import com.snolf.common.Static;
 import com.snolf.common.page.PageInfo;
 import com.snolf.common.util.UUIDUtil;
 import com.snolf.common.util.ValidateUtil;
+import com.snolf.config.shiro.token.TokenManager;
 import com.snolf.system.mapper.SysUserMapper;
 import com.snolf.system.mapper.SysUserRoleMapper;
 import com.snolf.system.model.SysUser;
@@ -55,7 +56,20 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Override
 	public SysUser query(SysUser user) throws Exception {
-		return userMapper.query(user);
+		SysUser resultEntity = userMapper.query(user);
+		//获取用户角色信息
+		SysUserRole paramData = new SysUserRole();
+		paramData.setUserId(resultEntity.getId());
+		List<SysUserRole> resultList = userRoleMapper.queryList(paramData);
+		String roleNames = "";
+		for (int i = 0; i < resultList.size(); i++) {
+			roleNames += resultList.get(i).getRoleName();
+			roleNames += ",";
+		}
+		if (roleNames.length() > 0) {
+			resultEntity.setRoleName(roleNames.substring(0, roleNames.length()-1));
+		}
+		return resultEntity;
 	}
 
 	@Override
@@ -76,6 +90,28 @@ public class SysUserServiceImpl implements SysUserService {
 		ValidateUtil.paramRequired(paramEntity.getLoginName(), "登录名不能为空");
 		ValidateUtil.paramRequired(paramEntity.getPassword(), "密码不能为空");
 		ValidateUtil.paramValidate(checkLoginName(paramEntity.getLoginName()), "该账户已存在");
+
+		int i = userMapper.update(paramEntity);
+		return i;
+	}
+
+	/**
+	 * 修改用户密码
+	 * @param oldPassword
+	 * @param newPassword
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public int updatePassword(String oldPassword, String newPassword) throws Exception {
+		ValidateUtil.paramRequired(oldPassword, "旧密码不能为空");
+		ValidateUtil.paramRequired(newPassword, "新密码不能为空");
+		SysUser userToken = TokenManager.getToken();
+
+		SysUser paramEntity = new SysUser();
+		paramEntity.setPassword(newPassword);
+		paramEntity.setId(userToken.getId());
 
 		int i = userMapper.update(paramEntity);
 		return i;
