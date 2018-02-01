@@ -112,11 +112,11 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
 			throw new UnknownAccountException("服务器异常");
 		}
 		//登录判断
-		if(null == checkUser) {
+		if (null == checkUser) {
 			throw new AccountException("帐号或密码不正确！");
 		} else if (1 == checkUser.getUserStatus()) {
 			throw new AccountException("帐号已被禁用！");
-		}else {
+		} else {
 			Session session = TokenManager.getSession();
 			session.setAttribute("proUrl", project.getUrl());
 			session.setAttribute("userId", checkUser.getId());
