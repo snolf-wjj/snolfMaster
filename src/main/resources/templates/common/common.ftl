@@ -1,4 +1,3 @@
-<#assign base="http://localhost" />
 
 <link rel="stylesheet" type="text/css" href="${base}/h-ui/css/H-ui.min.css">
 <link rel="stylesheet" type="text/css" href="${base}/h-ui.admin/css/H-ui.admin.css">

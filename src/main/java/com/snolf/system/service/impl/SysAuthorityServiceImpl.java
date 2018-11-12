@@ -70,7 +70,7 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int update(SysAuthority paramEntity) throws Exception {
 		ValidateUtil.paramRequired(paramEntity.getId(), "id不能为空");
 		ValidateUtil.paramRequired(paramEntity.getAuthName(), "authName不能为空");
@@ -93,7 +93,7 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int delete(String id) throws Exception {
 		// 校验该权限下是否有子权限
 		ValidateUtil.paramValidate(checkAuthChildren(Integer.parseInt(id)), "该权限下有子权限，请先删除子权限");
@@ -105,7 +105,7 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int batchDelete(String ids) throws Exception {
 		String[] idsArray = ids.split(",");
 		int result = authorityMapper.batchDelete(idsArray);
@@ -113,7 +113,7 @@ public class SysAuthorityServiceImpl implements SysAuthorityService {
 	}
 	
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int insert(SysAuthority paramEntity) throws Exception {
 		ValidateUtil.paramRequired(paramEntity.getAuthName(), "authName不能为空");
 		ValidateUtil.paramRequired(paramEntity.getProId(), "proId不能为空");

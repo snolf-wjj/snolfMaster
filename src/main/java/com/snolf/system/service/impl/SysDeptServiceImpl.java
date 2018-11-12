@@ -70,21 +70,21 @@ public class SysDeptServiceImpl implements SysDeptService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int update(SysDept dept) throws Exception {
 		int result = deptMapper.update(dept);
 		return result;
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int delete(String id) throws Exception {
 		int result = deptMapper.deleteById(id);
 		return result;
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int batchDelete(String ids) throws Exception {
 		String[] idsArray = ids.split(",");
 		for (int i = 0; i < idsArray.length; i++) {
@@ -97,7 +97,7 @@ public class SysDeptServiceImpl implements SysDeptService {
 	}
 	
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int insert(SysDept paramEntity) throws Exception {
 		paramEntity.setId(UUIDUtil.getUUID32Str());
 		paramEntity.setCreateTime(new Date());

@@ -1,6 +1,10 @@
 package com.snolf.base;
 
+import com.snolf.system.model.SysUser;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
@@ -15,6 +19,8 @@ import java.util.Map;
  * Time: 11:34
  */
 public class BaseController {
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	protected Map<String, Object> resultMap = new LinkedHashMap<>();
 
 	/**
@@ -32,6 +38,11 @@ public class BaseController {
 			}
 		}
 		return m;
+	}
+
+	protected String getLoginUserName() {
+		SysUser userToken = (SysUser) SecurityUtils.getSubject().getPrincipal();
+		return userToken.getUserName();
 	}
 
 }

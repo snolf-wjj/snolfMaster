@@ -104,6 +104,9 @@
     <logger name="com.snolf.system.mapper" level="DEBUG">
         <appender-ref ref="FILE_SQL" />
     </logger>
+    <logger name="com.snolf.manager.cc.mapper" level="DEBUG">
+        <appender-ref ref="FILE_SQL" />
+    </logger>
 
     <springProfile name="local">
         <root level="INFO">

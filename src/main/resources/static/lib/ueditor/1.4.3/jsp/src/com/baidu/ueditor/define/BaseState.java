@@ -12,7 +12,7 @@ public class BaseState implements State {
 	private String info = null;
 	
 	private Map<String, String> infoMap = new HashMap<String, String>();
-	
+
 	public BaseState () {
 		this.state = true;
 	}

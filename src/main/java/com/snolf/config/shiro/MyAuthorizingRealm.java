@@ -18,6 +18,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -29,6 +31,7 @@ import java.util.*;
  * Date: 2017/10/10
  * Time: 18:39
  */
+@Configuration
 public class MyAuthorizingRealm extends AuthorizingRealm {
 	@Resource
 	private SysUserService sysUserService;
@@ -39,7 +42,11 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
 	@Resource
 	private SysProjectService sysProjectService;
 
+	@Value("${env}")
+	private String env;
 
+	@Value("${env.url}")
+	private String env_url;
 	/**
 	 * 角色授权
 	 * @param principalCollection
@@ -118,7 +125,12 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
 			throw new AccountException("帐号已被禁用！");
 		} else {
 			Session session = TokenManager.getSession();
-			session.setAttribute("proUrl", project.getUrl());
+			if ("local".equals(env)) {
+				session.setAttribute("proUrl", env_url);
+			} else {
+				session.setAttribute("proUrl", project.getUrl());
+			}
+
 			session.setAttribute("userId", checkUser.getId());
 			session.setAttribute("userName", checkUser.getUserName());
 			session.setAttribute("lastLoginIp", checkUser.getLoginIp());

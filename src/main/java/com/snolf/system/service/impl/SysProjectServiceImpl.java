@@ -42,7 +42,7 @@ public class SysProjectServiceImpl implements SysProjectService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int update(SysProject paramData) throws Exception {
 		paramData.setUpdateTime(new Date());
 		int result = projectMapper.update(paramData);
@@ -50,14 +50,14 @@ public class SysProjectServiceImpl implements SysProjectService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int delete(String id) throws Exception {
 		int result = projectMapper.deleteById(id);
 		return result;
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int batchDelete(String ids) throws Exception {
 		String[] idsArray = ids.split(",");
 		int result = projectMapper.batchDelete(idsArray);
@@ -65,7 +65,7 @@ public class SysProjectServiceImpl implements SysProjectService {
 	}
 	
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int insert(SysProject paramEntity) throws Exception {
 		ValidateUtil.paramRequired(paramEntity.getName(), "name不能为空");
 		ValidateUtil.paramRequired(paramEntity.getProKey(), "标识不能为空");

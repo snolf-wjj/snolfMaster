@@ -1,6 +1,5 @@
 package com.snolf.common;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -9,18 +8,14 @@ import java.io.IOException;
 /**
  * 图片地址上传工具类
  * 
- * @Title: ImageUpload.java
+ * @Title: ImageUtil.java
  * @Description:
  * @author Hanzhonghua
  * @date 2016年10月19日下午2:01:32
  * @see [相关类/方法]
  * @since [产品/模块版本]
  */
-public class ImageUpload {
-	@Value("${imgPath}")
-	private String imgPath;
-	@Value("${photoPath}")
-	private String photoPath;
+public class ImageUtil {
 
 	/**
 	 * 上传图片
@@ -34,25 +29,19 @@ public class ImageUpload {
 	 * @return
 	 * @see [类、类#方法、类#成员]
 	 */
-	public static Boolean uploadImg(MultipartFile file, String type, String fileName) {
-		String imgPath = "";
-//		if(imgType.IMG_HOUSE.getCode().equals(type)) {
-//			imgPaths = imgPath;
-//		} else if(imgType.IMG_PHOTO.getCode().equals(type)) {
-//			imgPaths = Config.getStringValue("photoPath")+"/";
-//		}
+	public static Boolean upload(MultipartFile file, String type, String filePath, String fileName) {
 		if(null == file) {
 			return false;
 		}
 		// 创建文件目录
-		File savedir = new File(imgPath);
+		File savedir = new File(filePath);
 		// 如果目录不存在就创建
 		if (!savedir.exists()) {
 			savedir.mkdirs();
 		}
 		// 将上传的文件信息保存到相应的文件目录里
 		try {
-			file.transferTo(new File(imgPath + fileName));
+			file.transferTo(new File(filePath + fileName));
 			return true;
 		} catch (IllegalStateException e) {
 			e.printStackTrace();

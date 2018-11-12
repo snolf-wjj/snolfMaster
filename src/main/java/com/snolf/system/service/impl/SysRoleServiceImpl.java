@@ -120,7 +120,7 @@ public class SysRoleServiceImpl implements SysRoleService{
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int batchDelete(String ids) throws Exception {
 		String[] idsArray = ids.split(",");
 		int result = roleMapper.batchDelete(idsArray);
@@ -150,7 +150,7 @@ public class SysRoleServiceImpl implements SysRoleService{
 	 * @throws Exception
 	 */
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int assignRoleAuth(List<SysRoleAuthority> paramData, String roleId) throws Exception {
 		ValidateUtil.paramRequired(roleId, "角色ID不能为空！");
 		SysRoleAuthority data = new SysRoleAuthority();

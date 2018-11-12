@@ -1,9 +1,9 @@
 <#--<#assign base="http://192.168.32.54" />-->
-
+<#--<#assign base="http://47.93.241.17" />-->
 <#if Session["proUrl"]?exists>
     <#assign base = Session["proUrl"]>
 <#else>
-    <#assign base="http://47.93.241.17" />
+    <#assign base="http://localhost" />
 </#if>
 
 

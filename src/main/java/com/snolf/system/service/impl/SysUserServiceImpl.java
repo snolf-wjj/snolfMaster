@@ -73,7 +73,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int updateStatus(SysUser paramEntity) throws Exception {
 		ValidateUtil.paramRequired(paramEntity.getId(), "ID不能为空");
 		ValidateUtil.paramRequired(paramEntity.getUserStatus(), "状态值不能为空");
@@ -84,7 +84,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int update(SysUser paramEntity) throws Exception {
 		ValidateUtil.paramRequired(paramEntity.getId(), "ID不能为空");
 		ValidateUtil.paramRequired(paramEntity.getLoginName(), "登录名不能为空");
@@ -103,7 +103,7 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @throws Exception
 	 */
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int updatePassword(String oldPassword, String newPassword) throws Exception {
 		ValidateUtil.paramRequired(oldPassword, "旧密码不能为空");
 		ValidateUtil.paramRequired(newPassword, "新密码不能为空");
@@ -118,7 +118,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int updateLoginInfo(SysUser paramEntity) throws Exception {
 		ValidateUtil.paramRequired(paramEntity.getId(), "ID不能为空");
 
@@ -127,7 +127,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int delete(String id) throws Exception {
 		int i = userMapper.deleteById(id);
 		if (i > 0) {
@@ -139,7 +139,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int batchDelete(String ids) throws Exception {
 		String[] idsArray = ids.split(",");
 		int result = userMapper.batchDelete(idsArray);
@@ -155,7 +155,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 	
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int insert(SysUser paramEntity) throws Exception {
 		ValidateUtil.paramRequired(paramEntity.getLoginName(), "登录名不能为空");
 		ValidateUtil.paramRequired(paramEntity.getPassword(), "密码不能为空");
@@ -168,7 +168,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = Throwable.class)
+	@Transactional(rollbackFor = Exception.class)
 	public int assignUserRole(List<SysUserRole> paramData, String userId) throws Exception {
 		ValidateUtil.paramRequired(userId, "用户ID不能为空！");
 		SysUserRole data = new SysUserRole();

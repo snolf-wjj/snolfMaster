@@ -55,7 +55,7 @@ public class MyBatisConfig implements TransactionManagementConfigurer{
 		bean.setPlugins(new Interceptor[]{pageHelper});
 		try {
 			ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-			bean.setMapperLocations(resolver.getResources("classpath:mapper/*/*.xml"));
+			bean.setMapperLocations(resolver.getResources("classpath:mapper/**/*.xml"));
 			bean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);// 使用驼峰命名法转换字段
 			return bean.getObject();
 		} catch (Exception e) {

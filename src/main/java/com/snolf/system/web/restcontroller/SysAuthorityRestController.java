@@ -11,8 +11,6 @@ import com.snolf.common.util.ValidateUtil;
 import com.snolf.system.model.SysAuthority;
 import com.snolf.system.service.SysAuthorityService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,8 +24,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("system/rest/authority")
 public class SysAuthorityRestController extends BaseController{
-	public static Logger LOGGER = LoggerFactory.getLogger(SysAuthorityRestController.class);
-	
+
 	@Resource
 	private SysAuthorityService sysAuthorityService;
 	
