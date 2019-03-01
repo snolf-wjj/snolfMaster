@@ -128,7 +128,7 @@ public class ShiroConfiguration {
 		filterChainDefinitionManager.put("/skin/**", "anon");
 		filterChainDefinitionManager.put("/favicon.ico", "anon");
 
-		filterChainDefinitionManager.put("/system/login.html", "anon");	//标识可以匿名访问
+//		filterChainDefinitionManager.put("/system/login.html", "anon");	//标识可以匿名访问
 		filterChainDefinitionManager.put("/system/rest/login", "anon");
 		filterChainDefinitionManager.put("/error/**", "anon");
 		filterChainDefinitionManager.put("/system/index.html", "authc");

@@ -1,5 +1,6 @@
 package com.snolf.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,6 +15,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter{
+
+	public static String env_url;
+
+	@Value("${env.url}")
+	public void setEnv_url(String env_url) {
+		this.env_url = env_url;
+	}
 
 	/*
 	 * 以前要访问一个页面需要先创建个Controller控制类，在写方法跳转到页面

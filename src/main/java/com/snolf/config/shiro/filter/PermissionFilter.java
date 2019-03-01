@@ -4,6 +4,8 @@ import com.snolf.common.contact.SystemStatusCode;
 import com.snolf.common.response.ResponseResult;
 import com.snolf.common.response.ResponseUtil;
 import com.snolf.common.util.LoggerUtils;
+import com.snolf.config.WebMvcConfig;
+import javax.servlet.ServletContext;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.StringUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
@@ -68,6 +70,14 @@ public class PermissionFilter extends AccessControlFilter{
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
 		LoggerUtils.debug(PermissionFilter.class, "权限拦截处理");
+		ServletContext application = request.getServletContext();
+		if (org.apache.commons.lang3.StringUtils.isBlank((String) application.getAttribute("proUrl"))) {
+			application.setAttribute("proUrl", WebMvcConfig.env_url);
+		}
+		HttpServletRequest hsr = (HttpServletRequest)request;
+		if (hsr.getRequestURI().indexOf("login.html") > 0) {
+			return true;
+		}
 		Subject subject = getSubject(request, response);
 		if (null == subject.getPrincipal()) {//表示没有登录，重定向到登录页面
 			saveRequest(request);

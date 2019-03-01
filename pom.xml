@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project [
+        <!ELEMENT project (modelVersion|groupId|artifactId|version|packaging|name|parent|properties|dependencies|profiles|build)*>
+        <!ATTLIST project
+                xmlns CDATA #REQUIRED
+                xmlns:xsi CDATA #REQUIRED
+                xsi:schemaLocation CDATA #REQUIRED>
+        <!ELEMENT modelVersion (#PCDATA)>
+        <!ELEMENT groupId (#PCDATA)>
+        <!ELEMENT artifactId (#PCDATA)>
+        <!ELEMENT version (#PCDATA)>
+        <!ELEMENT packaging (#PCDATA)>
+        <!ELEMENT name (#PCDATA)>
+        <!ELEMENT parent (groupId|artifactId|version|relativePath)*>
+        <!ELEMENT relativePath (#PCDATA)>
+        <!ELEMENT properties (project.build.sourceEncoding|project.reporting.outputEncoding|java.version|profileActive)*>
+        <!ELEMENT project.build.sourceEncoding (#PCDATA)>
+        <!ELEMENT project.reporting.outputEncoding (#PCDATA)>
+        <!ELEMENT java.version (#PCDATA)>
+        <!ELEMENT dependencies (dependency)*>
+        <!ELEMENT dependency (groupId|artifactId|scope|version)*>
+        <!ELEMENT scope (#PCDATA)>
+        <!ELEMENT profiles (profile)*>
+        <!ELEMENT profile (id|properties|activation)*>
+        <!ELEMENT id (#PCDATA)>
+        <!ELEMENT profileActive (#PCDATA)>
+        <!ELEMENT activation (activeByDefault)*>
+        <!ELEMENT activeByDefault (#PCDATA)>
+        <!ELEMENT build (plugins)*>
+        <!ELEMENT plugins (plugin)*>
+        <!ELEMENT plugin (groupId|artifactId|dependencies)*>
+        ]>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -159,10 +190,12 @@
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
         </dependency>
 
     </dependencies>

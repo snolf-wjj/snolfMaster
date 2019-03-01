@@ -2,14 +2,10 @@
 <#--<#assign base="http://47.93.241.17" />-->
 <#if Session["proUrl"]?exists>
     <#assign base = Session["proUrl"]>
-<#else>
-    <#assign base="http://localhost" />
+<#elseif Application["proUrl"]?exists>
+    <#assign base = Application["proUrl"]>
 </#if>
 
-
-<#if Session["userId"]?exists>
-    <#assign userId = Session["userId"]>
-</#if>
 
 <#if Session["userName"]?exists>
     <#assign userName = Session["userName"]>
