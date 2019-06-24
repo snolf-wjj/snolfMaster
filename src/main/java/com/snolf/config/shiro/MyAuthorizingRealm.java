@@ -134,7 +134,9 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
 			session.setAttribute("userId", checkUser.getId());
 			session.setAttribute("userName", checkUser.getUserName());
 			session.setAttribute("lastLoginIp", checkUser.getLoginIp());
-			session.setAttribute("lastLoginTime", DateUtil.formatDateString(checkUser.getLoginTime(), DateUtil.DATETIME_PATTERN_19));
+			if (checkUser.getLoginTime() != null) {
+				session.setAttribute("lastLoginTime", DateUtil.formatDateString(checkUser.getLoginTime(), DateUtil.DATETIME_PATTERN_19));
+			}
 			//更新用户登录信息
 			SysUser paramEntity = new SysUser();
 			paramEntity.setId(checkUser.getId());

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.snolf.third.classmates.mapper.ClassmatesInfoMapper">
+	<resultMap id="BaseResultMap" type="com.snolf.third.classmates.model.ClassmatesInfo">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="inner_code" property="innerCode" jdbcType="BIGINT"/>
+		<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="address" property="address" jdbcType="VARCHAR"/>
+		<result column="company_name" property="companyName" jdbcType="VARCHAR"/>
+		<result column="industry_type" property="industryType" jdbcType="VARCHAR"/>
+		<result column="qq_number" property="qqNumber" jdbcType="VARCHAR"/>
+		<result column="weixin_number" property="weixinNumber" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="create_user" property="createUser" jdbcType="VARCHAR"/>
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="update_user" property="updateUser" jdbcType="VARCHAR"/>
+		<result column="is_del" property="isDel" jdbcType="TINYINT"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+    id, inner_code, user_name, phone, address, company_name, industry_type, qq_number, 
+    weixin_number, create_time, create_user, update_time, update_user, is_del, remark
+  </sql>
+	<select id="query" resultMap="BaseResultMap" parameterType="com.snolf.third.classmates.model.ClassmatesInfo">
+		select
+		<include refid="Base_Column_List"/>
+		from classmates_info
+		where is_del = 0
+		<if test="innerCode != null">
+			and inner_code = #{innerCode,jdbcType=BIGINT}
+		</if>
+	</select>
+	<select id="queryList" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List"/>
+		from classmates_info
+		where is_del = 0
+		<if test="startCreateTime != null and startCreateTime != ''">
+			and create_time&gt;= concat(#{startCreateTime,jdbcType=VARCHAR}, '00:00:00')
+		</if>
+		<if test="endCreateTime != null and endCreateTime != ''">
+			and create_time&lt;= concat(#{endCreateTime,jdbcType=VARCHAR}, '23:59:59')
+		</if>
+		<if test="userName != null and userName != ''">
+			and user_name like concat('%', #{userName,jdbcType=VARCHAR}, '%')
+		</if>
+	</select>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		update classmates_info set is_del = 1
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.snolf.third.classmates.model.ClassmatesInfo">
+		insert into classmates_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="innerCode != null">
+				inner_code,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="companyName != null">
+				company_name,
+			</if>
+			<if test="industryType != null">
+				industry_type,
+			</if>
+			<if test="qqNumber != null">
+				qq_number,
+			</if>
+			<if test="weixinNumber != null">
+				weixin_number,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="updateUser != null">
+				update_user,
+			</if>
+			<if test="isDel != null">
+				is_del,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="innerCode != null">
+				#{innerCode,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="companyName != null">
+				#{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="industryType != null">
+				#{industryType,jdbcType=VARCHAR},
+			</if>
+			<if test="qqNumber != null">
+				#{qqNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="weixinNumber != null">
+				#{weixinNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				#{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="isDel != null">
+				#{isDel,jdbcType=TINYINT},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.snolf.third.classmates.model.ClassmatesInfo">
+		update classmates_info
+		<set>
+			<if test="innerCode != null">
+				inner_code = #{innerCode,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null">
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="companyName != null">
+				company_name = #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="industryType != null">
+				industry_type = #{industryType,jdbcType=VARCHAR},
+			</if>
+			<if test="qqNumber != null">
+				qq_number = #{qqNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="weixinNumber != null">
+				weixin_number = #{weixinNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateUser != null">
+				update_user = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="isDel != null">
+				is_del = #{isDel,jdbcType=TINYINT},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

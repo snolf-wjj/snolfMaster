@@ -64,9 +64,9 @@ public class SysLoginRestController extends BaseController{
 				url = savedRequest.getRequestUrl();
 			}
 			//如果登录之前没有地址，那么就跳转到首页。
-			if(StringUtils.isBlank(url) || url.contains("login")){
+//			if(StringUtils.isBlank(url) || url.contains("login")){
 				url = TokenManager.getSession().getAttribute("proUrl") + "/system/index.html";
-			}
+//			}
 
 			resultMap.put("url", url);
 			resultMap.put("message", "登录成功");

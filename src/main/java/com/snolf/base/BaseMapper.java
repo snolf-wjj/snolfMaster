@@ -103,6 +103,14 @@ public interface BaseMapper<T> {
 	 * @see [类、类#方法、类#成员]
 	 */
 	int deleteById(String id);
+	/**
+	 * 根据ID删除数据
+	 * @Title:
+	 * @author wangjunjie
+	 * @date 2017/6/21 16:44
+	 * @see [类、类#方法、类#成员]
+	 */
+	int deleteById(Integer id);
 
 	/**
 	 * 批量删除实体

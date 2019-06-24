@@ -89,7 +89,7 @@ public class SysUserServiceImpl implements SysUserService {
 		ValidateUtil.paramRequired(paramEntity.getId(), "ID不能为空");
 		ValidateUtil.paramRequired(paramEntity.getLoginName(), "登录名不能为空");
 		ValidateUtil.paramRequired(paramEntity.getPassword(), "密码不能为空");
-		ValidateUtil.paramValidate(checkLoginName(paramEntity.getLoginName()), "该账户已存在");
+		ValidateUtil.paramValidate(checkLoginName(paramEntity.getLoginName(), paramEntity.getId()), "该账户已存在");
 
 		int i = userMapper.update(paramEntity);
 		return i;
@@ -159,7 +159,7 @@ public class SysUserServiceImpl implements SysUserService {
 	public int insert(SysUser paramEntity) throws Exception {
 		ValidateUtil.paramRequired(paramEntity.getLoginName(), "登录名不能为空");
 		ValidateUtil.paramRequired(paramEntity.getPassword(), "密码不能为空");
-		ValidateUtil.paramValidate(checkLoginName(paramEntity.getLoginName()), "该账户已存在");
+		ValidateUtil.paramValidate(checkLoginName(paramEntity.getLoginName(), null), "该账户已存在");
 
 		paramEntity.setId(UUIDUtil.getUUID32Str());
 		paramEntity.setCreateTime(new Date());
@@ -203,11 +203,13 @@ public class SysUserServiceImpl implements SysUserService {
 	 * @return
 	 * @throws Exception
 	 */
-	private Boolean checkLoginName(String loginName) throws Exception {
+	private Boolean checkLoginName(String loginName, String id) throws Exception {
 		SysUser paramEntity = new SysUser();
 		paramEntity.setLoginName(loginName);
 		SysUser checkUser = userMapper.query(paramEntity);
 		if (null == checkUser) {
+			return Boolean.FALSE;
+		} else if (null != id && checkUser.getId().equals(id)){
 			return Boolean.FALSE;
 		} else {
 			return Boolean.TRUE;

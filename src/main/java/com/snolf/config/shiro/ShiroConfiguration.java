@@ -128,12 +128,29 @@ public class ShiroConfiguration {
 		filterChainDefinitionManager.put("/skin/**", "anon");
 		filterChainDefinitionManager.put("/favicon.ico", "anon");
 
-//		filterChainDefinitionManager.put("/system/login.html", "anon");	//标识可以匿名访问
+		filterChainDefinitionManager.put("/system/login.html", "anon");	//标识可以匿名访问
 		filterChainDefinitionManager.put("/system/rest/login", "anon");
 		filterChainDefinitionManager.put("/error/**", "anon");
 		filterChainDefinitionManager.put("/system/index.html", "authc");
 		filterChainDefinitionManager.put("/system/welcome.html", "authc");
 		filterChainDefinitionManager.put("/system/rest/logout", "authc");
+
+		// =======第三方权限拦截===========
+		filterChainDefinitionManager.put("/third/css/**", "anon");
+		filterChainDefinitionManager.put("/third/fonts/**", "anon");
+		filterChainDefinitionManager.put("/third/images/**", "anon");
+		filterChainDefinitionManager.put("/third/js/**", "anon");
+
+		filterChainDefinitionManager.put("/third/classmates/index.html", "anon");
+		filterChainDefinitionManager.put("/third/rest/classmates/login", "anon");
+		filterChainDefinitionManager.put("/third/classmates/register.html", "anon");
+		filterChainDefinitionManager.put("/third/rest/classmates/register", "anon");
+		filterChainDefinitionManager.put("/third/classmates/form.html", "authc");
+		filterChainDefinitionManager.put("/third/rest/classmates/info/add", "authc");
+		filterChainDefinitionManager.put("/third/classmates/info/list.html", "authc");
+		filterChainDefinitionManager.put("/third/rest/classmates/info/list", "authc");
+
+
 //		try {
 //			List<SysAuthority> authorityList = sysAuthorityService.queryAuthList(new HashedMap());
 //			//TODO
