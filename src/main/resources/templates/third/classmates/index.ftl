@@ -20,7 +20,7 @@
 <body>
 
 <div class="limiter">
-	<div class="container-login100" style="background-image: url('http://localhost/third/images/img-01.jpg');">
+	<div class="container-login100" style="background-image: url('${base}/third/images/img-01.jpg');">
 		<div class="wrap-login100 p-t-190 p-b-30">
 			<form id="form" class="login100-form validate-form">
 				<div class="login100-form-avatar">
@@ -65,8 +65,8 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="http://localhost/third/js/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="http://localhost/third/js/main.js"></script>
+<script type="text/javascript" src="${base}/third/js/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="${base}/third/js/main.js"></script>
 <script type="application/javascript">
 	var _hmt = _hmt || [];
 	(function() {

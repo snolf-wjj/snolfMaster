@@ -8,13 +8,13 @@
 
 	<!--图标样式-->
 	<link rel="stylesheet" type="text/css"
-		  href="http://localhost/third/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
+		  href="${base}/third/fonts/font-awesome-4.7.0/css/font-awesome.min.css"/>
 
 	<!--布局框架-->
-	<link rel="stylesheet" type="text/css" href="http://localhost/third/css/util.css"/>
+	<link rel="stylesheet" type="text/css" href="${base}/third/css/util.css"/>
 
 	<!--主要样式-->
-	<link rel="stylesheet" type="text/css" href="http://localhost/third/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="${base}/third/css/main.css"/>
 </head>
 
 <body>
@@ -24,7 +24,7 @@
 		<div class="wrap-login100 p-t-190 p-b-30">
 			<form id="form" class="login100-form validate-form">
 				<div class="login100-form-avatar">
-					<img src="http://localhost/third/images/avatar-01.jpg" alt="AVATAR">
+					<img src="${base}/third/images/avatar-01.jpg" alt="AVATAR">
 				</div>
 
 				<span class="login100-form-title p-t-20 p-b-45">填写个人信息</span>
@@ -88,10 +88,10 @@
 	</div>
 </div>
 </body>
-<script type="text/javascript" src="http://localhost/third/js/jquery/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="http://localhost/third/js/main.js"></script>
+<script type="text/javascript" src="${base}/third/js/jquery/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="${base}/third/js/main.js"></script>
 <script type="application/javascript">
 
 </script>
-<script type="text/javascript" src="http://localhost/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="${base}/lib/layer/2.4/layer.js"></script>
 </html>
