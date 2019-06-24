@@ -215,7 +215,6 @@ public class ClassmatesRestController extends BaseController {
 			paramData.setInnerCode((Long) session.getAttribute("innerCode"));
 			paramData.setCreateUser((String) session.getAttribute("userName"));
 
-
 			ClassmatesInfo checkParam = new ClassmatesInfo();
 			checkParam.setInnerCode(paramData.getInnerCode());
 			ClassmatesInfo checkData = classmatesInfoService.query(checkParam);

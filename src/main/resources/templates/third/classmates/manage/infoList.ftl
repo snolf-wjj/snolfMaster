@@ -2,7 +2,7 @@
 <title>同学录信息管理</title>
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 同学录管理 <span class="c-gray en">&gt;</span> 同学录信息管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb" v-if="roleType == 0"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 同学录管理 <span class="c-gray en">&gt;</span> 同学录信息管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div id="app" class="page-container">
 	<div class="text-c"> 日期范围：
 		<input type="text" onfocus="WdatePicker({ maxDate:'#F{$dp.$D(\'endCreateTime\')||\'%y-%M-%d\'}' })" id="startCreateTime" class="input-text Wdate" style="width:120px;" v-model="startCreateTime" placeholder="开始时间">
@@ -15,8 +15,7 @@
 		<span class="r">共有数据：<strong v-cloak>{{total}}</strong> 条</span>
 	</div>
 	<div class="mt-20" style="display: flex;">
-		<div style="overflow-x: auto">
-		<table id="dataTable" width='100%' class="table table-border table-bordered table-hover table-bg table-sort">
+		<table id="dataTable" class="table table-border table-bordered table-hover table-bg table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="25" v-if="roleType == 0"><input type="checkbox" name="check"  value=""></th>
@@ -34,28 +33,27 @@
 			</thead>
 			<tbody>
 				<template v-if="dataList.length">
-				<tr class="text-c" v-for="info in dataList">
-					<td v-if="roleType == 0"><input type="checkbox" v-bind:value="info.id" name="check" text="check"></td>
-					<td>{{info.userName }}</td>
-					<td>{{info.phone}}</td>
-					<td>{{info.address}}</td>
-					<td>{{info.companyName}}</td>
-					<td>{{info.industryType}}</td>
-					<td>{{info.qqNumber}}</td>
-					<td>{{info.weixinNumber}}</td>
+					<tr class="text-c" v-for="info in dataList">
+						<td v-if="roleType == 0"><input type="checkbox" v-bind:value="info.id" name="check" text="check"></td>
+						<td>{{info.userName }}</td>
+						<td>{{info.phone}}</td>
+						<td>{{info.address}}</td>
+						<td>{{info.companyName}}</td>
+						<td>{{info.industryType}}</td>
+						<td>{{info.qqNumber}}</td>
+						<td>{{info.weixinNumber}}</td>
 
-					<td>{{info.createTime|vTime}}</td>
-					<td v-if="roleType == 0">{{info.createUser}}</td>
-					<td class="td-manage" v-if="roleType == 0">
-						<a title="编辑" href="javascript:;" v-on:click="edit('编辑','${base}/system/project/edit.html',info.id,'','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-						<a title="删除" href="javascript:;" v-on:click="del(this, info.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-					</td>
-				</tr>
+						<td>{{info.createTime|vTime}}</td>
+						<td v-if="roleType == 0">{{info.createUser}}</td>
+						<td class="td-manage" v-if="roleType == 0">
+							<a title="编辑" href="javascript:;" v-on:click="edit('编辑','${base}/system/project/edit.html',info.id,'','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+							<a title="删除" href="javascript:;" v-on:click="del(this, info.id)" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+						</td>
+					</tr>
 				</template>
 			</tbody>
 		</table>
 		<div id="pageList"></div>
-		</div>
 	</div>
 </div>
 <#include "../../../common/footer.ftl"/>
@@ -68,7 +66,7 @@
 var app = new Vue({
     el: '#app',
     data: {
-		roleType: 0,
+		roleType: 1,
         total: '',//数据总条数
         dataList: [],
 		pageNum:1,
