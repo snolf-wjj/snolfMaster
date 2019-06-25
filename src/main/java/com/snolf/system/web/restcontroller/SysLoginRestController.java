@@ -53,7 +53,6 @@ public class SysLoginRestController extends BaseController{
 			UsernamePasswordToken token = new UsernamePasswordToken(loginName, password);
 			token.setRememberMe(rememberMe);
 			SecurityUtils.getSubject().login(token);
-
 			SysUser userToken = (SysUser) SecurityUtils.getSubject().getPrincipal();
 			/**
 			 * shiro 获取登录之前的地址
@@ -72,6 +71,8 @@ public class SysLoginRestController extends BaseController{
 			resultMap.put("message", "登录成功");
 			return ResponseUtil.success(resultMap);
 		} catch (AccountException e) {
+			e.printStackTrace();
+			logger.error("登录异常,异常信息:{}", e.getMessage());
 			return ResponseUtil.error(SystemStatusCode.sysMsg.L_0001.getCode(), e.getMessage());
 		}catch (Exception e) {
 			return ResponseExceptionUtil.handleException(e);

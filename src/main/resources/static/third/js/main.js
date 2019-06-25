@@ -4,7 +4,8 @@
 	/*==================================================================
 	[ Validate ]*/
 	var input = $('.validate-input .input100');
-	var baseUrl = "http://192.168.0.145"
+	var baseUrl = "http://47.105.143.156:8090";
+
 
 	// $('.submit').on('click', function () {
 	// 	var check = true;

@@ -116,6 +116,7 @@ public class MyAuthorizingRealm extends AuthorizingRealm {
 			checkUser = sysUserService.login(token.getUsername(), String.valueOf(token.getPassword()));
 			project = sysProjectService.query(paramEntity_project);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new UnknownAccountException("服务器异常");
 		}
 		//登录判断
