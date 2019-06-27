@@ -10,6 +10,7 @@
 		<input type="text" onfocus="WdatePicker({ minDate:'#F{$dp.$D(\'startCreateTime\')}',maxDate:'%y-%M-%d' })" id="endCreateTime" class="input-text Wdate" style="width:120px;" v-model="endCreateTime" placeholder="结束时间">
 		<input type="text" class="input-text" style="width:250px" placeholder="输入同学姓名" id="name" v-model="name">
 		<button type="submit" class="btn btn-success radius" id="" v-on:click="loadData"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+		<button type="button" class="btn btn-success radius" id="" v-on:click="goFrom"><i class="Hui-iconfont">&#xe665;</i> 重新填写</button>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20">
 		<span class="r">共有数据：<strong v-cloak>{{total}}</strong> 条</span>
@@ -78,6 +79,9 @@ var app = new Vue({
         this.loadData(1);
     },
     methods: {
+		goFrom: function() {
+			window.location.href = "/third/classmates/form.html"
+		},
         loadData: function(pageNum) {
         	this.startCreateTime = $("#startCreateTime").val();
         	this.endCreateTime = $("#endCreateTime").val();
